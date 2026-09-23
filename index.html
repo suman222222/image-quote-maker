@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>✨ Original Quote Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 20%, #1e2a3a, #0a0f16 80%);
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .quote-card {
+      background: rgba(255, 255, 255, 0.06);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 2.5rem;
+      padding: 2.75rem 2.25rem 2rem;
+      max-width: 820px;
+      width: 100%;
+      box-shadow: 0 35px 60px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* subtle glowing accent */
+    .quote-card::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(100, 180, 255, 0.15), transparent 70%);
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #6f8ba3;
+      margin-bottom: 1.75rem;
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    .quote-container {
+      text-align: center;
+      margin-bottom: 1.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-text {
+      font-size: clamp(1.45rem, 4.5vw, 2.1rem);
+      font-weight: 400;
+      line-height: 1.55;
+      color: #eef6ff;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+      word-break: break-word;
+      font-style: italic;
+      letter-spacing: -0.01em;
+      min-height: 4.5em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0.5rem;
+    }
+
+    .quote-text::before {
+      content: '“';
+      font-size: 1.3em;
+      color: #7fb2d9;
+      opacity: 0.7;
+      margin-right: 0.15em;
+      font-style: normal;
+      line-height: 0;
+    }
+
+    .quote-text::after {
+      content: '”';
+      font-size: 1.3em;
+      color: #7fb2d9;
+      opacity: 0.7;
+      margin-left: 0.15em;
+      font-style: normal;
+      line-height: 0;
+    }
+
+    .author-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 0.5rem;
+      gap: 0.6rem;
+    }
+
+    .author-label {
+      font-size: 0.9rem;
+      color: #7d9cb8;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 400;
+      opacity: 0.7;
+    }
+
+    .author-name {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #cfe3f7;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.35rem 1.1rem;
+      border-radius: 40px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      letter-spacing: 0.4px;
+      font-style: normal;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.9rem;
+      margin-top: 2.25rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #eef6ff;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 0.85rem 1.9rem;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      letter-spacing: 0.3px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      min-width: 165px;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+      border-color: rgba(255, 255, 255, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.45);
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-primary {
+      background: #2f6b96;
+      border-color: #4f8cb8;
+      color: white;
+      box-shadow: 0 8px 22px rgba(0, 110, 190, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: #3b7ba8;
+      border-color: #6da5d0;
+      box-shadow: 0 12px 30px rgba(0, 140, 230, 0.5);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .counter-badge {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #6f8ba3;
+      margin-top: 1.6rem;
+      opacity: 0.65;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+
+    .fade-in {
+      animation: fadeIn 0.45s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 520px) {
+      .quote-card {
+        padding: 2rem 1.4rem 1.5rem;
+        border-radius: 1.8rem;
+      }
+      .btn {
+        padding: 0.75rem 1.2rem;
+        font-size: 0.95rem;
+        min-width: 135px;
+      }
+      .quote-text {
+        min-height: 5.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="quote-card">
+    <div class="tagline">original · never seen before</div>
+
+    <div class="quote-container">
+      <div id="quoteText" class="quote-text">Every quiet dawn writes a new chapter into the open sky.</div>
+      <div class="author-section">
+        <span class="author-label">—</span>
+        <span id="authorName" class="author-name">Generated</span>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button id="newQuoteBtn" class="btn btn-primary">
+        <i>✦</i> Generate New
+      </button>
+      <button id="copyBtn" class="btn">
+        <i>📋</i> Copy
+      </button>
+    </div>
+    <div id="counterDisplay" class="counter-badge">ready to create</div>
+  </div>
+
+  <script>
+    (function() {
+      // ============================================================
+      //  WORD BANKS  — every generated sentence is freshly assembled
+      // ============================================================
+
+      // Opening phrases that set the tone (no attribution to anyone)
+      const openings = [
+        "Every", "A single", "Each", "One", "The smallest", "No",
+        "Your", "A quiet", "The bravest", "Every fleeting",
+        "A gentle", "The wisest", "Some", "A truly", "Only a"
+      ];
+
+      // Nouns that feel timeless / poetic / reflective
+      const nouns = [
+        "moment", "thought", "dream", "step", "breath", "choice",
+        "silence", "spark", "river", "mountain", "seed", "word",
+        "sunrise", "shadow", "echo", "path", "star", "wind",
+        "flame", "garden", "ocean", "horizon", "whisper", "song"
+      ];
+
+      // Verbs (base form, will be conjugated simply)
+      const verbs = [
+        "holds", "carries", "shapes", "awakens", "reveals",
+        "becomes", "creates", "remembers", "frees", "teaches",
+        "opens", "lights", "moves", "heals", "builds", "finds",
+        "turns", "guides", "grows", "starts", "ends", "keeps"
+      ];
+
+      // Connectors that bridge the two halves of the sentence
+      const connectors = [
+        "and", "while", "because", "yet", "as", "until",
+        "before", "after", "though", "so", "when", "where"
+      ];
+
+      // Second-half subjects (pronouns / determiners)
+      const secondSubjects = [
+        "we", "you", "it", "they", "the heart", "the soul",
+        "the mind", "the world", "the future", "the past",
+        "our lives", "the quiet", "the light", "the dark"
+      ];
+
+      // Second-half verbs (conjugated to match plural/pronoun subjects)
+      const secondVerbs = [
+        "learn", "grow", "wait", "listen", "change", "begin",
+        "believe", "remember", "forget", "choose", "become",
+        "see", "feel", "know", "find", "rise", "fall", "shine",
+        "heal", "move", "stay", "breathe"
+      ];
+
+      // Ending fragments — the poetic tail of the sentence
+      const endings = [
+        "in the end", "once more", "without fear", "in silence",
+        "against the odds", "with open eyes", "before the dawn",
+        "after the rain", "in its own time", "like a river",
+        "like a fire", "beyond the noise", "into the unknown",
+        "with every heartbeat", "on the edge of tomorrow",
+        "in the space between", "when no one is watching",
+        "as the stars turn", "through the longest night",
+        "at the speed of trust", "for the sake of wonder",
+        "in a world of echoes", "beneath the same sky",
+        "without a single map", "past the point of return"
+      ];
+
+      // ============================================================
+      //  SENTENCE ASSEMBLY  — combines fragments randomly
+      // ============================================================
+
+      function pick(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      // Sometimes capitalize only first letter, sometimes full sentence-style
+      function capitalize(str) {
+        if (!str) return str;
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+
+      // Build one completely original sentence
+      function generateSentence() {
+        // 50/50 chance between two sentence structures for variety
+        const structure = Math.random() < 0.5 ? "A" : "B";
+
+        let sentence = "";
+
+        if (structure === "A") {
+          // Pattern: [Opening] [noun] [verb] [connector] [second subject] [second verb] [ending]
+          const opening = pick(openings);
+          const noun = pick(nouns);
+          const verb = pick(verbs);
+          const connector = pick(connectors);
+          const subj2 = pick(secondSubjects);
+          const verb2 = pick(secondVerbs);
+          const ending = pick(endings);
+
+          sentence = `${opening} ${noun} ${verb} ${connector} ${subj2} ${verb2} ${ending}.`;
+        } else {
+          // Pattern: [Opening] [noun] [verb] [ending] — shorter, punchier
+          const opening = pick(openings);
+          const noun = pick(nouns);
+          const verb = pick(verbs);
+          const ending = pick(endings);
+
+          sentence = `${opening} ${noun} ${verb} ${ending}.`;
+        }
+
+        // Capitalize first letter, clean up any double spaces
+        sentence = capitalize(sentence.replace(/\s+/g, ' '));
+
+        return sentence;
+      }
+
+      // ============================================================
+      //  DOM + LOGIC
+      // ============================================================
+
+      const quoteTextEl = document.getElementById('quoteText');
+      const authorNameEl = document.getElementById('authorName');
+      const newQuoteBtn = document.getElementById('newQuoteBtn');
+      const copyBtn = document.getElementById('copyBtn');
+      const counterDisplay = document.getElementById('counterDisplay');
+
+      let generationCount = 0;
+
+      // Update the "signature" — instead of a real author, we label it "Generated"
+      // and optionally show a pseudo-tag to reinforce originality
+      function updateAuthorTag() {
+        // A playful rotating label so it never claims a real person
+        const tags = [
+          "Generated", "Freshly Made", "Original", "Just Created",
+          "Newly Woven", "A.I. Crafted", "Instant Original",
+          "One of a Kind", "Never Spoken Before", "Born Today"
+        ];
+        authorNameEl.textContent = tags[Math.floor(Math.random() * tags.length)];
+      }
+
+      // Render a newly generated sentence with fade effect
+      function renderNewQuote() {
+        const newSentence = generateSentence();
+
+        quoteTextEl.classList.add('fade-out');
+
+        setTimeout(() => {
+          quoteTextEl.textContent = newSentence;
+
+          quoteTextEl.classList.remove('fade-out');
+          quoteTextEl.classList.add('fade-in');
+
+          setTimeout(() => {
+            quoteTextEl.classList.remove('fade-in');
+          }, 450);
+
+          // refresh the signature line
+          updateAuthorTag();
+
+          // increment counter
+          generationCount++;
+          counterDisplay.textContent = `${generationCount} original${generationCount === 1 ? '' : 's'} created`;
+
+        }, 150);
+      }
+
+      // Initial setup: show first generated sentence immediately
+      function init() {
+        // Generate first sentence on load
+        quoteTextEl.textContent = generateSentence();
+        updateAuthorTag();
+
+        generationCount = 1;
+        counterDisplay.textContent = `${generationCount} original created`;
+
+        // Bind buttons
+        newQuoteBtn.addEventListener('click', renderNewQuote);
+
+        copyBtn.addEventListener('click', copyCurrentQuote);
+
+        // Keyboard shortcut: press N for new
+        document.addEventListener('keydown', (e) => {
+          if (e.target.matches('input, textarea, [contenteditable]')) return;
+          if (e.key === 'n' || e.key === 'N') {
+            e.preventDefault();
+            renderNewQuote();
+          }
+        });
+      }
+
+      // Copy the current generated quote + its tag
+      async function copyCurrentQuote() {
+        const text = `"${quoteTextEl.textContent}" — ${authorNameEl.textContent}`;
+
+        try {
+          await navigator.clipboard.writeText(text);
+
+          // visual feedback
+          const originalHTML = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i>✅</i> Copied!';
+          copyBtn.disabled = true;
+
+          setTimeout(() => {
+            copyBtn.innerHTML = originalHTML;
+            copyBtn.disabled = false;
+          }, 1400);
+        } catch (err) {
+          // fallback
+          fallbackCopy(text);
+        }
+      }
+
+      function fallbackCopy(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          const originalHTML = copyBtn.innerHTML;
+          copyBtn.innerHTML = '<i>✅</i> Copied!';
+          copyBtn.disabled = true;
+          setTimeout(() => {
+            copyBtn.innerHTML = originalHTML;
+            copyBtn.disabled = false;
+          }, 1400);
+        } catch (e) {
+          alert('Please copy manually.');
+        }
+        document.body.removeChild(textarea);
+      }
+
+      // Start
+      init();
+    })();
+  </script>
+</body>
+</html>
