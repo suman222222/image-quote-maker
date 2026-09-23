@@ -134,7 +134,6 @@
     border-radius: 9px;
     transition: all 0.2s;
     font-family: 'Inter', sans-serif;
-    letter-spacing: 0.2px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -171,72 +170,7 @@
     color: var(--text-mid);
   }
 
-  .step-hint {
-    font-size: 10.5px; color: var(--text-dim);
-    line-height: 1.5; margin-left: 29px;
-  }
-
-  /* ---- Upload ---- */
-  .upload-zone {
-    border: 1.5px dashed var(--stroke-2);
-    border-radius: var(--radius);
-    padding: 22px 14px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: rgba(255,255,255,0.012);
-  }
-
-  .upload-zone:hover, .upload-zone.dragover {
-    border-color: var(--accent);
-    background: rgba(255,122,26,0.04);
-  }
-
-  .upload-zone.has-image {
-    padding: 12px; border-style: solid;
-    border-color: rgba(52,211,153,0.4);
-    background: rgba(52,211,153,0.04);
-  }
-
-  .upload-icon { font-size: 22px; display: block; margin-bottom: 8px; opacity: 0.7; }
-  .upload-title { font-size: 12.5px; font-weight: 600; color: var(--text); }
-  .upload-sub { font-size: 10.5px; color: var(--text-dim); margin-top: 4px; }
-
-  .upload-thumb { display: none; align-items: center; gap: 10px; text-align: left; }
-  .upload-zone.has-image .upload-thumb { display: flex; }
-  .upload-zone.has-image .upload-default { display: none; }
-
-  .thumb-img {
-    width: 44px; height: 44px; border-radius: 8px;
-    object-fit: cover; border: 1px solid var(--stroke-2);
-  }
-
-  .thumb-info { flex: 1; min-width: 0; }
-  .thumb-name {
-    font-size: 11.5px; font-weight: 600; color: var(--text);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  .thumb-meta { font-size: 10px; color: var(--success); margin-top: 2px; font-weight: 600; }
-
-  .thumb-remove {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--stroke-2);
-    color: var(--text-mid);
-    width: 24px; height: 24px;
-    border-radius: 7px; cursor: pointer; font-size: 12px;
-    display: grid; place-items: center; flex-shrink: 0;
-    transition: all 0.2s;
-  }
-
-  .thumb-remove:hover {
-    background: rgba(255,80,80,0.15);
-    border-color: rgba(255,80,80,0.4);
-    color: #ff8080;
-  }
-
-  #fileInput { display: none; }
-
-  /* ---- Background presets (text card mode) ---- */
+  /* ---- Background presets (FIXED - visible colors) ---- */
   .bg-presets {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -257,7 +191,7 @@
 
   .bg-swatch.active {
     border-color: var(--accent-2);
-    box-shadow: 0 0 0 3px rgba(255,122,26,0.2);
+    box-shadow: 0 0 0 3px rgba(255,122,26,0.25);
   }
 
   .bg-swatch.active::after {
@@ -266,10 +200,11 @@
     inset: 0;
     display: grid;
     place-items: center;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 800;
     color: #fff;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+    background: rgba(0,0,0,0.15);
   }
 
   /* ---- Chips ---- */
@@ -299,6 +234,78 @@
     border-color: var(--accent);
     color: var(--accent-2);
     box-shadow: 0 0 0 3px rgba(255,122,26,0.08);
+  }
+
+  /* ---- Caption style buttons ---- */
+  .style-presets {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .style-preset {
+    background: var(--bg-2);
+    border: 1px solid var(--stroke);
+    color: var(--text-mid);
+    padding: 10px 6px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.18s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .style-preset:hover {
+    border-color: var(--stroke-2);
+    background: var(--bg-3);
+  }
+
+  .style-preset.active {
+    background: rgba(255,122,26,0.13);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(255,122,26,0.08);
+  }
+
+  .style-preset.active .sp-name { color: var(--accent-2); }
+
+  .sp-icon {
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    color: var(--text-mid);
+  }
+
+  .style-preset.active .sp-icon { color: var(--accent-2); }
+
+  /* Little visual preview lines */
+  .sp-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+    width: 100%;
+  }
+  .sp-lines .l { height: 2px; background: currentColor; border-radius: 2px; }
+  .sp-lines .l.s { width: 60%; }
+  .sp-lines .l.m { width: 80%; }
+  .sp-lines .l.f { width: 100%; }
+  .sp-lines.vertical { flex-direction: row; height: 14px; gap: 3px; align-items: stretch; }
+  .sp-lines.vertical .l { width: 2px; height: 100%; }
+  .sp-lines.diagonal { transform: rotate(-30deg); }
+
+  .sp-name {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
   }
 
   /* ---- Caption editor ---- */
@@ -602,13 +609,8 @@
     font-size: 14px; flex-shrink: 0;
   }
 
-  .pro-text .title {
-    font-size: 12px; font-weight: 700; color: var(--text);
-  }
-
-  .pro-text .desc {
-    font-size: 10.5px; color: var(--text-dim); margin-top: 2px;
-  }
+  .pro-text .title { font-size: 12px; font-weight: 700; color: var(--text); }
+  .pro-text .desc { font-size: 10.5px; color: var(--text-dim); margin-top: 2px; }
 
   .pro-cta {
     background: linear-gradient(135deg, var(--accent) 0%, #d9500a 100%);
@@ -670,7 +672,6 @@
   .toast-icon.info { background: rgba(255,122,26,0.15); color: var(--accent-2); }
   .toast-icon.error { background: rgba(255,80,80,0.15); color: #ff6b6b; }
 
-  /* ---- Utility: hide in mode ---- */
   .hide-mode { display: none !important; }
 
   /* ==================== RESPONSIVE ==================== */
@@ -691,6 +692,7 @@
     .credit-pill { display: none; }
     .preview-container { min-height: 260px; }
     .bg-presets { grid-template-columns: repeat(4, 1fr); }
+    .style-presets { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
 </head>
@@ -731,31 +733,82 @@
           <div class="step-title">Background</div>
         </div>
         <div class="bg-presets" id="bgPresets">
-          <div class="bg-swatch active" data-bg="linear-gradient(135deg,#ff7a1a,#d9500a)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#0ea5e9,#1e3a8a)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#10b981,#065f46)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#f43f5e,#7f1d1d)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#8b5cf6,#4c1d95)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#facc15,#b45309)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#1f2937,#0f172a)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#fda4af,#be185d)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#67e8f9,#0891b2)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#fb923c,#7c2d12)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#a3e635,#3f6212)"></div>
-          <div class="bg-swatch" data-bg="#ffffff"></div>
-          <div class="bg-swatch" data-bg="#0a0a0a"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#f5f5f4,#a8a29e)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#c084fc,#f472b6)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#22d3ee,#7c3aed)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#fcd34d,#dc2626)"></div>
-          <div class="bg-swatch" data-bg="linear-gradient(135deg,#334155,#0f172a)"></div>
+          <!-- Gradients — inline styles make them VISIBLE -->
+          <div class="bg-swatch active" data-bg="linear-gradient(135deg,#ff7a1a,#d9500a)" style="background: linear-gradient(135deg,#ff7a1a,#d9500a);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#0ea5e9,#1e3a8a)" style="background: linear-gradient(135deg,#0ea5e9,#1e3a8a);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#10b981,#065f46)" style="background: linear-gradient(135deg,#10b981,#065f46);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#f43f5e,#7f1d1d)" style="background: linear-gradient(135deg,#f43f5e,#7f1d1d);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#8b5cf6,#4c1d95)" style="background: linear-gradient(135deg,#8b5cf6,#4c1d95);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#facc15,#b45309)" style="background: linear-gradient(135deg,#facc15,#b45309);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#1f2937,#0f172a)" style="background: linear-gradient(135deg,#1f2937,#0f172a);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#fda4af,#be185d)" style="background: linear-gradient(135deg,#fda4af,#be185d);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#67e8f9,#0891b2)" style="background: linear-gradient(135deg,#67e8f9,#0891b2);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#fb923c,#7c2d12)" style="background: linear-gradient(135deg,#fb923c,#7c2d12);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#a3e635,#3f6212)" style="background: linear-gradient(135deg,#a3e635,#3f6212);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#c084fc,#f472b6)" style="background: linear-gradient(135deg,#c084fc,#f472b6);"></div>
+          <div class="bg-swatch" data-bg="#ffffff" style="background:#ffffff;"></div>
+          <div class="bg-swatch" data-bg="#0a0a0a" style="background:#0a0a0a;"></div>
+          <div class="bg-swatch" data-bg="#f5f5f4" style="background:#f5f5f4;"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#22d3ee,#7c3aed)" style="background: linear-gradient(135deg,#22d3ee,#7c3aed);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#fcd34d,#dc2626)" style="background: linear-gradient(135deg,#fcd34d,#dc2626);"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#334155,#0f172a)" style="background: linear-gradient(135deg,#334155,#0f172a);"></div>
+        </div>
+      </div>
+
+      <!-- Caption Style -->
+      <div class="step">
+        <div class="step-head">
+          <div class="step-num">2</div>
+          <div class="step-title">Caption Style</div>
+        </div>
+        <div class="style-presets" id="stylePresets">
+          <div class="style-preset active" data-style="horizontal">
+            <div class="sp-lines">
+              <div class="l f"></div>
+              <div class="l m"></div>
+              <div class="l s"></div>
+            </div>
+            <div class="sp-name">Horizontal</div>
+          </div>
+          <div class="style-preset" data-style="vertical">
+            <div class="sp-lines vertical">
+              <div class="l"></div>
+              <div class="l"></div>
+              <div class="l"></div>
+            </div>
+            <div class="sp-name">Vertical</div>
+          </div>
+          <div class="style-preset" data-style="diagonal">
+            <div class="sp-lines diagonal">
+              <div class="l f"></div>
+              <div class="l m"></div>
+            </div>
+            <div class="sp-name">Diagonal</div>
+          </div>
+          <div class="style-preset" data-style="stacked">
+            <div class="sp-lines">
+              <div class="l s"></div>
+              <div class="l s"></div>
+              <div class="l s"></div>
+              <div class="l s"></div>
+            </div>
+            <div class="sp-name">Stacked</div>
+          </div>
+          <div class="style-preset" data-style="big">
+            <div class="sp-icon" style="font-size:14px;font-weight:800;">BIG</div>
+            <div class="sp-name">Big Center</div>
+          </div>
+          <div class="style-preset" data-style="circle">
+            <div class="sp-icon">◎</div>
+            <div class="sp-name">Circular</div>
+          </div>
         </div>
       </div>
 
       <!-- Theme -->
       <div class="step">
         <div class="step-head">
-          <div class="step-num">2</div>
+          <div class="step-num">3</div>
           <div class="step-title">Caption Theme</div>
         </div>
         <div class="chip-grid" id="themeChipsText">
@@ -771,7 +824,7 @@
       <!-- Caption -->
       <div class="step">
         <div class="step-head">
-          <div class="step-num">3</div>
+          <div class="step-num">4</div>
           <div class="step-title">Caption</div>
         </div>
         <div class="caption-wrap">
@@ -790,7 +843,6 @@
     <!-- ============ PHOTO CAPTION MODE ============ -->
     <div id="photoModePanel" class="hide-mode">
 
-      <!-- Upload -->
       <div class="step">
         <div class="step-head">
           <div class="step-num">1</div>
@@ -814,23 +866,21 @@
         <input type="file" id="fileInput" accept="image/*">
       </div>
 
-      <!-- Theme -->
       <div class="step">
         <div class="step-head">
           <div class="step-num">2</div>
-          <div class="step-title">Caption Theme</div>
+          <div class="step-title">Theme</div>
         </div>
         <div class="chip-grid" id="themeChipsPhoto">
-          <div class="chip active" data-theme="village">🏔️ Village Roots</div>
-          <div class="chip" data-theme="study">📚 Study Abroad</div>
-          <div class="chip" data-theme="hustle">💰 The Hustle</div>
-          <div class="chip" data-theme="today">🌅 Living Today</div>
+          <div class="chip active" data-theme="village">🏔️ Village</div>
+          <div class="chip" data-theme="study">📚 Study</div>
+          <div class="chip" data-theme="hustle">💰 Hustle</div>
+          <div class="chip" data-theme="today">🌅 Today</div>
           <div class="chip" data-theme="memories">📸 Memories</div>
-          <div class="chip" data-theme="life">🌱 Life Journey</div>
+          <div class="chip" data-theme="life">🌱 Life</div>
         </div>
       </div>
 
-      <!-- Caption -->
       <div class="step">
         <div class="step-head">
           <div class="step-num">3</div>
@@ -852,7 +902,7 @@
     <!-- ============ SHARED STYLE CONTROLS ============ -->
     <div class="step">
       <div class="step-head">
-        <div class="step-num">4</div>
+        <div class="step-num">5</div>
         <div class="step-title">Style</div>
       </div>
 
@@ -867,12 +917,12 @@
       <div class="style-group">
         <div class="style-label">Text Color</div>
         <div class="swatch-row" id="textColors">
-          <div class="swatch active" data-color="#ffffff" style="background:#ffffff"></div>
-          <div class="swatch" data-color="#ffd166" style="background:#ffd166"></div>
-          <div class="swatch" data-color="#ff8a3d" style="background:#ff8a3d"></div>
-          <div class="swatch" data-color="#7ad1ff" style="background:#7ad1ff"></div>
-          <div class="swatch" data-color="#ff8fb1" style="background:#ff8fb1"></div>
-          <div class="swatch" data-color="#000000" style="background:#000000"></div>
+          <div class="swatch active" data-color="#ffffff" style="background:#ffffff;"></div>
+          <div class="swatch" data-color="#ffd166" style="background:#ffd166;"></div>
+          <div class="swatch" data-color="#ff8a3d" style="background:#ff8a3d;"></div>
+          <div class="swatch" data-color="#7ad1ff" style="background:#7ad1ff;"></div>
+          <div class="swatch" data-color="#ff8fb1" style="background:#ff8fb1;"></div>
+          <div class="swatch" data-color="#000000" style="background:#000000;"></div>
         </div>
       </div>
 
@@ -957,9 +1007,7 @@
       "I am a village boy with a city-sized hunger.",
       "My roots are in Nepal. My hustle is global.",
       "I walked away from home with one bag and a thousand reasons.",
-      "The village gave me my heart. This journey is giving me my story.",
-      "Back home the stars are louder than the traffic. I still hear them.",
-      "I grew up where roads were dirt and dreams were endless."
+      "The village gave me my heart. This journey is giving me my story."
     ],
     study: [
       "I left home to study — not just books, but life itself.",
@@ -971,9 +1019,7 @@
       "I'm not just studying for a degree — I'm studying for a way up.",
       "First time living alone. First time being truly responsible for me.",
       "I study by day, dream by night, and build in between.",
-      "This degree is not just mine. It belongs to everyone who believed in me.",
-      "I traded my mother's cooking for independence. Some days I miss both.",
-      "Every exam is a small step back home — but forward too."
+      "This degree is not just mine. It belongs to everyone who believed in me."
     ],
     hustle: [
       "I started posting reels not for fame, but because I need to earn in USD.",
@@ -985,9 +1031,7 @@
       "One reel at a time, I'm building a bridge to the world.",
       "I don't need luck. I need consistency and one viral moment.",
       "I'm learning marketing, editing, and life — from one phone screen.",
-      "They said get a real job. I'm building one — just differently.",
-      "The algorithm doesn't know my story yet. But it will.",
-      "Every view, every save — it's all fuel for the dream."
+      "They said get a real job. I'm building one — just differently."
     ],
     today: [
       "I'm not waiting for the perfect day. I'm living this one.",
@@ -999,9 +1043,7 @@
       "I'm learning to be proud of small progress.",
       "Today I'm not comparing. I'm creating.",
       "I'm exactly where I need to be — even if it doesn't look like it yet.",
-      "Living today, not someday. Building now, not later.",
-      "Today I let the small wins count.",
-      "I chose today over someday. Again."
+      "Living today, not someday. Building now, not later."
     ],
     memories: [
       "One day these hard days will be the memories I'm most proud of.",
@@ -1013,9 +1055,7 @@
       "I want to look back and say: I really lived those years.",
       "I'm turning my struggle into stories worth remembering.",
       "This chapter is hard, but it's mine.",
-      "Someday I'll scroll back and smile at how far I've come.",
-      "Every frame here is a page of my story.",
-      "One day this will just be a photo. Right now it's my whole life."
+      "Someday I'll scroll back and smile at how far I've come."
     ],
     life: [
       "My journey started in a small village and is being written in a big world.",
@@ -1027,9 +1067,7 @@
       "I'm a work in progress, and I'm okay with that.",
       "This is not a phase. This is my life's biggest chapter.",
       "I came from nothing, but I'm building something — reel by reel.",
-      "My journey is proof that where you start doesn't decide where you finish.",
-      "I'm not lost. I'm just early in my story.",
-      "Every day I'm one step closer to the life I imagined back home."
+      "My journey is proof that where you start doesn't decide where you finish."
     ]
   };
 
@@ -1037,14 +1075,12 @@
   //  STATE
   // ============================================================
   const state = {
-    mode: 'text',            // 'text' | 'photo'
-    // text card
+    mode: 'text',
     bg: 'linear-gradient(135deg,#ff7a1a,#d9500a)',
-    // photo
+    captionStyle: 'horizontal',
     image: null,
     imageName: '',
     imageSize: 0,
-    // shared
     theme: 'village',
     textColor: '#ffffff',
     position: 'bottom',
@@ -1091,21 +1127,18 @@
         $('photoModePanel').classList.add('hide-mode');
         $('posGroup').style.display = 'none';
         $('overlayGroup').style.display = 'none';
-        // In text mode, "position" is always center
         state.position = 'center';
-        render();
       } else {
         $('textModePanel').classList.add('hide-mode');
         $('photoModePanel').classList.remove('hide-mode');
         $('posGroup').style.display = '';
         $('overlayGroup').style.display = '';
-        // Restore bottom position for photo
         state.position = 'bottom';
         document.querySelectorAll('#posChips .chip').forEach(c => {
           c.classList.toggle('active', c.dataset.pos === 'bottom');
         });
-        render();
       }
+      render();
     });
   });
 
@@ -1125,7 +1158,7 @@
   }
 
   // ============================================================
-  //  BACKGROUND SWATCHES (text mode)
+  //  BACKGROUND SWATCHES (now visible via inline styles)
   // ============================================================
   document.querySelectorAll('.bg-swatch').forEach(sw => {
     sw.addEventListener('click', () => {
@@ -1137,7 +1170,19 @@
   });
 
   // ============================================================
-  //  THEME CHIPS (both modes)
+  //  CAPTION STYLE PRESETS
+  // ============================================================
+  document.querySelectorAll('.style-preset').forEach(preset => {
+    preset.addEventListener('click', () => {
+      document.querySelectorAll('.style-preset').forEach(p => p.classList.remove('active'));
+      preset.classList.add('active');
+      state.captionStyle = preset.dataset.style;
+      render();
+    });
+  });
+
+  // ============================================================
+  //  THEME CHIPS
   // ============================================================
   function bindThemeChips(containerId, textareaId, charCountId) {
     document.querySelectorAll(`#${containerId} .chip`).forEach(chip => {
@@ -1156,7 +1201,7 @@
   bindThemeChips('themeChipsPhoto', 'captionPhoto', 'charCountPhoto');
 
   // ============================================================
-  //  CAPTION TEXTAREAS + TOOLS
+  //  CAPTION TOOLS
   // ============================================================
   function updateCharCount(countId, taId) {
     const len = $(taId).value.length;
@@ -1168,19 +1213,16 @@
 
   function bindCaptionTools(taId, countId, regenId, creditId, clearId) {
     const ta = $(taId);
-
     ta.addEventListener('input', () => {
       updateCharCount(countId, taId);
       render();
     });
-
     $(regenId).addEventListener('click', () => {
       ta.value = pickCaption(state.theme);
       updateCharCount(countId, taId);
       render();
       toast('New caption generated', 'info');
     });
-
     $(creditId).addEventListener('click', () => {
       const val = ta.value.trim();
       if (val.includes('@sumxn-official')) {
@@ -1192,7 +1234,6 @@
       render();
       toast('Credit added', 'success');
     });
-
     $(clearId).addEventListener('click', () => {
       ta.value = '';
       updateCharCount(countId, taId);
@@ -1204,7 +1245,7 @@
   bindCaptionTools('captionPhoto', 'charCountPhoto', 'regenPhotoBtn', 'creditPhotoBtn', 'clearPhotoBtn');
 
   // ============================================================
-  //  POSITION CHIPS
+  //  POSITION / COLOR / FONT / SLIDERS
   // ============================================================
   document.querySelectorAll('#posChips .chip').forEach(chip => {
     chip.addEventListener('click', () => {
@@ -1215,9 +1256,6 @@
     });
   });
 
-  // ============================================================
-  //  TEXT COLOR SWATCHES
-  // ============================================================
   document.querySelectorAll('#textColors .swatch').forEach(sw => {
     sw.addEventListener('click', () => {
       document.querySelectorAll('#textColors .swatch').forEach(s => s.classList.remove('active'));
@@ -1227,9 +1265,6 @@
     });
   });
 
-  // ============================================================
-  //  FONT BUTTONS
-  // ============================================================
   document.querySelectorAll('.font-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
@@ -1239,9 +1274,6 @@
     });
   });
 
-  // ============================================================
-  //  SLIDERS
-  // ============================================================
   $('sizeSlider').addEventListener('input', (e) => {
     state.sizePercent = +e.target.value;
     $('sizeValue').textContent = e.target.value;
@@ -1272,7 +1304,6 @@
   $('thumbRemove').addEventListener('click', (e) => {
     e.stopPropagation();
     state.image = null;
-    state.imageName = '';
     uploadZone.classList.remove('has-image');
     $('thumbImg').src = '';
     fileInput.value = '';
@@ -1323,8 +1354,6 @@
       const img = new Image();
       img.onload = () => {
         state.image = img;
-        state.imageName = file.name;
-        state.imageSize = file.size;
         uploadZone.classList.add('has-image');
         $('thumbImg').src = img.src;
         $('thumbName').textContent = file.name;
@@ -1348,8 +1377,8 @@
   //  MAIN RENDER
   // ============================================================
   function render() {
-    const textareaId = state.mode === 'text' ? 'captionText' : 'captionPhoto';
-    const text = $(textareaId).value.trim();
+    const taId = state.mode === 'text' ? 'captionText' : 'captionPhoto';
+    const text = $(taId).value.trim();
 
     if (state.mode === 'text') {
       renderTextCard(text);
@@ -1364,27 +1393,17 @@
     canvas.width = W;
     canvas.height = H;
 
-    // Background (gradient string or solid color)
-    if (state.bg.startsWith('linear-gradient')) {
-      const match = state.bg.match(/linear-gradient\(([^,]+),(.+)\)/);
-      const angle = parseGradientAngle(match[1]);
-      const stops = match[2].split(',').map(s => s.trim());
-      const grad = buildGradient(ctx, angle, W, H, stops);
-      ctx.fillStyle = grad;
-    } else {
-      ctx.fillStyle = state.bg;
-    }
-    ctx.fillRect(0, 0, W, H);
+    // Background paint
+    paintBackground(state.bg, W, H);
 
-    // Subtle vignette
-    const vign = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.75);
+    // Vignette
+    const vign = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.8);
     vign.addColorStop(0, 'rgba(0,0,0,0)');
-    vign.addColorStop(1, 'rgba(0,0,0,0.18)');
+    vign.addColorStop(1, 'rgba(0,0,0,0.22)');
     ctx.fillStyle = vign;
     ctx.fillRect(0, 0, W, H);
 
     if (!text) {
-      // Placeholder
       ctx.font = `500 28px "Inter", system-ui, sans-serif`;
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
@@ -1394,19 +1413,14 @@
       return;
     }
 
-    // Text rendering
-    drawWrappedText(text, W, H, true);
-
-    // Credit watermark
+    drawTextByStyle(text, W, H, true);
     drawCredit(W, H, 60, 60);
-
     updateActionState(false);
   }
 
   // ---- PHOTO CAPTION MODE ----
   function renderPhotoCaption(text) {
     if (!state.image) {
-      // Empty state - just show dark placeholder
       canvas.width = 1080;
       canvas.height = 1080;
       ctx.fillStyle = '#0a0a0a';
@@ -1434,84 +1448,260 @@
     ctx.drawImage(img, 0, 0, w, h);
 
     if (text) {
-      drawWrappedText(text, w, h, false);
+      drawTextByStyle(text, w, h, false);
     }
-
     drawCredit(w, h, Math.round(w * 0.03), Math.round(w * 0.03));
     updateActionState(false);
   }
 
-  // ---- Text drawing (shared) ----
-  function drawWrappedText(text, w, h, isTextCard) {
-    const fontSizePx = Math.round(w * (state.sizePercent / 1000));
+  // ============================================================
+  //  CAPTION STYLE DISPATCHER
+  // ============================================================
+  function drawTextByStyle(text, w, h, isTextCard) {
+    // Compute style-specific font
     const fontFamily = state.font === 'playfair'
       ? '"Playfair Display", Georgia, serif'
       : '"Inter", system-ui, sans-serif';
     const fontStyle = state.font === 'playfair' ? 'italic ' : '';
 
+    // Photo mode: draw dark overlay first (for readability)
+    if (!isTextCard) {
+      drawOverlay(w, h);
+    }
+
+    // Dispatch
+    switch (state.captionStyle) {
+      case 'vertical':
+        drawVertical(text, w, h, fontFamily, fontStyle);
+        break;
+      case 'diagonal':
+        drawDiagonal(text, w, h, fontFamily, fontStyle);
+        break;
+      case 'stacked':
+        drawStacked(text, w, h, fontFamily, fontStyle);
+        break;
+      case 'big':
+        drawBigCenter(text, w, h, fontFamily, fontStyle);
+        break;
+      case 'circle':
+        drawCircular(text, w, h, fontFamily, fontStyle);
+        break;
+      case 'horizontal':
+      default:
+        drawHorizontal(text, w, h, fontFamily, fontStyle, isTextCard);
+    }
+
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
+    ctx.shadowOffsetY = 0;
+  }
+
+  // ---- Dark overlay for photo mode ----
+  function drawOverlay(w, h) {
+    const op = state.overlayOpacity / 100;
+    if (state.captionStyle === 'big' || state.captionStyle === 'circle') {
+      // Uniform dark for centered styles
+      ctx.fillStyle = `rgba(0,0,0,${op * 0.75})`;
+      ctx.fillRect(0, 0, w, h);
+      return;
+    }
+    if (state.position === 'top') {
+      const gh = Math.min(h, h * 0.4);
+      const grad = ctx.createLinearGradient(0, 0, 0, gh);
+      grad.addColorStop(0, `rgba(0,0,0,${op})`);
+      grad.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, w, gh);
+    } else if (state.position === 'bottom') {
+      const gh = Math.min(h, h * 0.5);
+      const start = h - gh;
+      const grad = ctx.createLinearGradient(0, start, 0, h);
+      grad.addColorStop(0, 'rgba(0,0,0,0)');
+      grad.addColorStop(1, `rgba(0,0,0,${op})`);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, start, w, gh);
+    } else {
+      ctx.fillStyle = `rgba(0,0,0,${op * 0.65})`;
+      ctx.fillRect(0, h * 0.3, w, h * 0.4);
+    }
+  }
+
+  // ============================================================
+  //  STYLE 1: HORIZONTAL (default wrapped, top/center/bottom)
+  // ============================================================
+  function drawHorizontal(text, w, h, fontFamily, fontStyle, isTextCard) {
+    const fontSizePx = Math.round(w * (state.sizePercent / 1000));
     ctx.font = `${fontStyle}700 ${fontSizePx}px ${fontFamily}`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
     const padding = Math.round(w * 0.07);
-    const maxTextWidth = w - padding * 2;
-    const words = text.split(/\s+/);
-    const lines = [];
-    let current = '';
-
-    for (const word of words) {
-      const test = current ? current + ' ' + word : word;
-      if (ctx.measureText(test).width > maxTextWidth && current) {
-        lines.push(current);
-        current = word;
-      } else {
-        current = test;
-      }
-    }
-    if (current) lines.push(current);
-
+    const maxWidth = w - padding * 2;
+    const lines = wrapText(text, maxWidth);
     const lineHeight = fontSizePx * 1.35;
-    const totalTextHeight = lines.length * lineHeight;
+    const totalH = lines.length * lineHeight;
 
     let startY;
     if (isTextCard) {
-      startY = (h - totalTextHeight) / 2 + lineHeight / 2;
+      startY = (h - totalH) / 2 + lineHeight / 2;
     } else if (state.position === 'top') {
       startY = padding + fontSizePx;
     } else if (state.position === 'center') {
-      startY = (h - totalTextHeight) / 2 + lineHeight / 2;
+      startY = (h - totalH) / 2 + lineHeight / 2;
     } else {
-      startY = h - padding - totalTextHeight + lineHeight / 2;
+      startY = h - padding - totalH + lineHeight / 2;
     }
 
-    // Overlay gradient (photo mode only)
-    if (!isTextCard) {
-      const op = state.overlayOpacity / 100;
-      if (state.position === 'top') {
-        const gh = Math.min(h, totalTextHeight + padding * 3);
-        const grad = ctx.createLinearGradient(0, 0, 0, gh);
-        grad.addColorStop(0, `rgba(0,0,0,${op})`);
-        grad.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, w, gh);
-      } else if (state.position === 'bottom') {
-        const gh = Math.min(h, totalTextHeight + padding * 3);
-        const start = h - gh;
-        const grad = ctx.createLinearGradient(0, start, 0, h);
-        grad.addColorStop(0, 'rgba(0,0,0,0)');
-        grad.addColorStop(1, `rgba(0,0,0,${op})`);
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, start, w, gh);
-      } else {
-        const bandTop = Math.max(0, (h - totalTextHeight) / 2 - padding);
-        const bandH = totalTextHeight + padding * 2;
-        ctx.fillStyle = `rgba(0,0,0,${op * 0.85})`;
-        ctx.fillRect(0, bandTop, w, bandH);
-      }
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = Math.round(fontSizePx * 0.35);
+    ctx.shadowOffsetY = Math.round(fontSizePx * 0.04);
+    ctx.fillStyle = state.textColor;
+    lines.forEach((line, i) => ctx.fillText(line, w / 2, startY + i * lineHeight));
+  }
+
+  // ============================================================
+  //  STYLE 2: VERTICAL (one word per line, centered)
+  // ============================================================
+  function drawVertical(text, w, h, fontFamily, fontStyle) {
+    const words = text.replace(/\n/g, ' ').split(/\s+/).filter(Boolean);
+    // If too many words, group them into 1-2 per line
+    const groups = [];
+    const maxWordsPerLine = Math.ceil(words.length / 8);
+    for (let i = 0; i < words.length; i += maxWordsPerLine) {
+      groups.push(words.slice(i, i + maxWordsPerLine).join(' '));
     }
 
-    // Text shadow for readability
-    ctx.shadowColor = 'rgba(0,0,0,0.45)';
+    const fontSizePx = Math.round(w * (state.sizePercent / 1400));
+    const lineHeight = fontSizePx * 1.55;
+
+    // Auto-shrink if too tall
+    let actualFont = fontSizePx;
+    let totalH = groups.length * lineHeight;
+    const maxH = h * 0.8;
+    if (totalH > maxH) {
+      const scale = maxH / totalH;
+      actualFont = Math.floor(fontSizePx * scale);
+    }
+    const finalLineH = actualFont * 1.55;
+    const finalTotalH = groups.length * finalLineH;
+
+    ctx.font = `${fontStyle}700 ${actualFont}px ${fontFamily}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const startY = (h - finalTotalH) / 2 + finalLineH / 2;
+
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = Math.round(actualFont * 0.35);
+    ctx.shadowOffsetY = Math.round(actualFont * 0.04);
+    ctx.fillStyle = state.textColor;
+
+    groups.forEach((g, i) => {
+      ctx.fillText(g, w / 2, startY + i * finalLineH);
+    });
+  }
+
+  // ============================================================
+  //  STYLE 3: DIAGONAL (rotated -8deg)
+  // ============================================================
+  function drawDiagonal(text, w, h, fontFamily, fontStyle) {
+    const fontSizePx = Math.round(w * (state.sizePercent / 1100));
+    ctx.font = `${fontStyle}700 ${fontSizePx}px ${fontFamily}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const padding = Math.round(w * 0.09);
+    const maxWidth = w - padding * 2;
+    const lines = wrapText(text, maxWidth);
+    const lineHeight = fontSizePx * 1.4;
+    const totalH = lines.length * lineHeight;
+
+    ctx.save();
+    ctx.translate(w / 2, h / 2);
+    ctx.rotate(-8 * Math.PI / 180);
+
+    ctx.shadowColor = 'rgba(0,0,0,0.55)';
+    ctx.shadowBlur = Math.round(fontSizePx * 0.4);
+    ctx.shadowOffsetY = Math.round(fontSizePx * 0.05);
+    ctx.fillStyle = state.textColor;
+
+    const startY = -totalH / 2 + lineHeight / 2;
+    lines.forEach((line, i) => {
+      ctx.fillText(line, 0, startY + i * lineHeight);
+    });
+    ctx.restore();
+  }
+
+  // ============================================================
+  //  STYLE 4: STACKED (one word per line, tight, big)
+  // ============================================================
+  function drawStacked(text, w, h, fontFamily, fontStyle) {
+    const words = text.replace(/\n/g, ' ').split(/\s+/).filter(Boolean);
+
+    // Fit as many stacked words as possible
+    let fontSizePx = Math.round(w * (state.sizePercent / 800));
+    let lineHeight = fontSizePx * 1.15;
+
+    // Auto-shrink to fit vertically
+    const maxH = h * 0.82;
+    while (words.length * lineHeight > maxH && fontSizePx > 20) {
+      fontSizePx -= 2;
+      lineHeight = fontSizePx * 1.15;
+    }
+
+    ctx.font = `${fontStyle}800 ${fontSizePx}px ${fontFamily}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const totalH = words.length * lineHeight;
+    const startY = (h - totalH) / 2 + lineHeight / 2;
+
+    ctx.shadowColor = 'rgba(0,0,0,0.55)';
+    ctx.shadowBlur = Math.round(fontSizePx * 0.4);
+    ctx.shadowOffsetY = Math.round(fontSizePx * 0.05);
+    ctx.fillStyle = state.textColor;
+
+    words.forEach((word, i) => {
+      ctx.fillText(word, w / 2, startY + i * lineHeight);
+    });
+  }
+
+  // ============================================================
+  //  STYLE 5: BIG CENTER (huge text, tightly wrapped)
+  // ============================================================
+  function drawBigCenter(text, w, h, fontFamily, fontStyle) {
+    // Larger font, tighter wrap
+    let fontSizePx = Math.round(w * (state.sizePercent / 620));
+    let padding = Math.round(w * 0.08);
+    let maxWidth = w - padding * 2;
+    let lines = wrapText(text, maxWidth);
+    let lineHeight = fontSizePx * 1.15;
+
+    // Auto-shrink to fit
+    const maxH = h * 0.82;
+    let guard = 0;
+    while (lines.length * lineHeight > maxH && fontSizePx > 24 && guard < 60) {
+      fontSizePx -= 2;
+      lineHeight = fontSizePx * 1.15;
+      lines = wrapText(text, maxWidth);
+      guard++;
+    }
+
+    ctx.font = `${fontStyle}800 ${fontSizePx}px ${fontFamily}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const totalH = lines.length * lineHeight;
+    const startY = (h - totalH) / 2 + lineHeight / 2;
+
+    // Draw a subtle translucent plate for readability
+    const plateH = totalH + padding * 0.9;
+    const plateY = (h - plateH) / 2;
+    ctx.fillStyle = 'rgba(0,0,0,0.18)';
+    roundRect(w / 2 - maxWidth / 2 - padding * 0.3, plateY, maxWidth + padding * 0.6, plateH, 24);
+    ctx.fill();
+
+    ctx.shadowColor = 'rgba(0,0,0,0.6)';
     ctx.shadowBlur = Math.round(fontSizePx * 0.35);
     ctx.shadowOffsetY = Math.round(fontSizePx * 0.04);
     ctx.fillStyle = state.textColor;
@@ -1519,27 +1709,109 @@
     lines.forEach((line, i) => {
       ctx.fillText(line, w / 2, startY + i * lineHeight);
     });
-
-    ctx.shadowColor = 'transparent';
-    ctx.shadowBlur = 0;
-    ctx.shadowOffsetY = 0;
   }
 
-  // ---- Credit watermark ----
-  function drawCredit(w, h, x, y) {
-    const creditSize = Math.max(14, Math.round(w * 0.018));
-    ctx.font = `700 ${creditSize}px "Inter", system-ui, sans-serif`;
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
-    ctx.fillStyle = 'rgba(255,255,255,0.72)';
-    ctx.shadowColor = 'rgba(0,0,0,0.7)';
-    ctx.shadowBlur = 6;
-    ctx.fillText('@sumxn-official', x, y);
-    ctx.shadowColor = 'transparent';
-    ctx.shadowBlur = 0;
+  // ============================================================
+  //  STYLE 6: CIRCULAR (short caption only, curved arrangement)
+  // ============================================================
+  function drawCircular(text, w, h, fontFamily, fontStyle) {
+    // Take first 3-5 words only
+    const words = text.replace(/\n/g, ' ').split(/\s+/).filter(Boolean);
+    const display = words.slice(0, 6);
+    const longest = display.reduce((a, b) => (a.length > b.length ? a : b), '');
+    const fontSizePx = Math.min(
+      Math.round(w * 0.09),
+      Math.round((w * 0.65) / Math.max(longest.length, 4))
+    );
+    const lineHeight = fontSizePx * 1.3;
+
+    ctx.font = `${fontStyle}700 ${fontSizePx}px ${fontFamily}`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    const totalH = display.length * lineHeight;
+    const startY = (h - totalH) / 2 + lineHeight / 2;
+
+    // Draw a subtle ring
+    const ringR = Math.max(totalH, w * 0.32);
+    ctx.strokeStyle = 'rgba(255,255,255,0.18)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, ringR * 0.95, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(w / 2, h / 2, ringR * 1.05, 0, Math.PI * 2);
+    ctx.stroke();
+
+    ctx.shadowColor = 'rgba(0,0,0,0.55)';
+    ctx.shadowBlur = Math.round(fontSizePx * 0.35);
+    ctx.shadowOffsetY = Math.round(fontSizePx * 0.04);
+    ctx.fillStyle = state.textColor;
+
+    display.forEach((line, i) => {
+      // Slight horizontal offset for a curved feel
+      const offsetX = Math.sin((i - (display.length - 1) / 2) * 0.4) * fontSizePx * 0.25;
+      ctx.fillText(line, w / 2 + offsetX, startY + i * lineHeight);
+    });
   }
 
-  // ---- Gradient helpers ----
+  // ============================================================
+  //  SHARED HELPERS
+  // ============================================================
+  function wrapText(text, maxWidth) {
+    // Preserve explicit line breaks
+    const paragraphs = text.split('\n');
+    const result = [];
+    for (const para of paragraphs) {
+      const words = para.split(/\s+/).filter(Boolean);
+      let current = '';
+      for (const word of words) {
+        const test = current ? current + ' ' + word : word;
+        if (ctx.measureText(test).width > maxWidth && current) {
+          result.push(current);
+          current = word;
+        } else {
+          current = test;
+        }
+      }
+      if (current) result.push(current);
+      if (paragraphs.length > 1) result.push(''); // spacer between paragraphs
+    }
+    return result.filter((l, i) => !(l === '' && i === result.length - 1));
+  }
+
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  // ============================================================
+  //  BACKGROUND PAINTING (supports gradients + solids)
+  // ============================================================
+  function paintBackground(bg, w, h) {
+    if (bg.startsWith('linear-gradient')) {
+      const match = bg.match(/linear-gradient\(([^,]+),(.+)\)/);
+      if (match) {
+        const angle = parseGradientAngle(match[1]);
+        const stops = match[2].split(',').map(s => s.trim());
+        const grad = buildGradient(angle, w, h, stops);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, h);
+        return;
+      }
+    }
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, w, h);
+  }
+
   function parseGradientAngle(str) {
     const s = str.trim();
     if (s.endsWith('deg')) return parseFloat(s) || 135;
@@ -1548,7 +1820,7 @@
     return 135;
   }
 
-  function buildGradient(ctx, angleDeg, w, h, stops) {
+  function buildGradient(angleDeg, w, h, stops) {
     const rad = (angleDeg - 90) * Math.PI / 180;
     const cx = w / 2, cy = h / 2;
     const len = Math.abs(w * Math.cos(rad)) + Math.abs(h * Math.sin(rad));
@@ -1561,6 +1833,22 @@
       grad.addColorStop(i / Math.max(stops.length - 1, 1), stop);
     });
     return grad;
+  }
+
+  // ============================================================
+  //  CREDIT
+  // ============================================================
+  function drawCredit(w, h, x, y) {
+    const creditSize = Math.max(14, Math.round(w * 0.018));
+    ctx.font = `700 ${creditSize}px "Inter", system-ui, sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = 'rgba(255,255,255,0.72)';
+    ctx.shadowColor = 'rgba(0,0,0,0.7)';
+    ctx.shadowBlur = 6;
+    ctx.fillText('@sumxn-official', x, y);
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0;
   }
 
   // ============================================================
@@ -1581,6 +1869,10 @@
       state.bg = 'linear-gradient(135deg,#ff7a1a,#d9500a)';
       document.querySelectorAll('.bg-swatch').forEach(s => {
         s.classList.toggle('active', s.dataset.bg === state.bg);
+      });
+      state.captionStyle = 'horizontal';
+      document.querySelectorAll('.style-preset').forEach(p => {
+        p.classList.toggle('active', p.dataset.style === 'horizontal');
       });
     } else {
       $('captionPhoto').value = '';
@@ -1622,7 +1914,7 @@
     try {
       const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
       const link = document.createElement('a');
-      link.download = `sumxn-${state.mode}-${ts}.png`;
+      link.download = `sumxn-${state.mode}-${state.captionStyle}-${ts}.png`;
       link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
       toast('Downloaded', 'success');
@@ -1638,12 +1930,10 @@
   // ============================================================
   //  INIT
   // ============================================================
-  // Text card mode is default; generate an initial caption
   $('captionText').value = pickCaption('village');
   updateCharCount('charCountText', 'captionText');
   updateCharCount('charCountPhoto', 'captionPhoto');
 
-  // Position chips hidden in text mode
   $('posGroup').style.display = 'none';
   $('overlayGroup').style.display = 'none';
   state.position = 'center';
