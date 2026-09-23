@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sumxn Studio — Auto Caption Engine</title>
+<title>Sumxn Studio — Caption Engine</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
@@ -40,10 +40,8 @@
     min-height: 100vh;
     padding: 20px;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ==================== APP SHELL ==================== */
   .app {
     max-width: 1280px;
     margin: 0 auto;
@@ -63,84 +61,36 @@
     padding: 14px 20px;
     background: rgba(14,16,22,0.7);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--stroke);
     border-radius: var(--radius-lg);
     flex-wrap: wrap;
     gap: 12px;
   }
 
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+  .logo { display: flex; align-items: center; gap: 12px; }
 
   .logo-mark {
     width: 38px; height: 38px;
     border-radius: 10px;
     background: linear-gradient(135deg, var(--accent) 0%, #d9500a 100%);
-    display: grid;
-    place-items: center;
+    display: grid; place-items: center;
     font-size: 17px;
     box-shadow: 0 4px 16px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,0.2);
   }
 
-  .logo-text .name {
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: -0.2px;
-  }
-
+  .logo-text .name { font-size: 14px; font-weight: 700; letter-spacing: -0.2px; }
   .logo-text .sub {
-    font-size: 10px;
-    color: var(--text-dim);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-top: 1px;
+    font-size: 10px; color: var(--text-dim);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 600; margin-top: 1px;
   }
 
-  .header-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .status-pill {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-mid);
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--stroke);
-    padding: 6px 12px;
-    border-radius: 40px;
-    letter-spacing: 0.3px;
-  }
-
-  .status-dot {
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--success);
-    box-shadow: 0 0 8px var(--success);
-    animation: pulse 2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+  .header-right { display: flex; align-items: center; gap: 10px; }
 
   .credit-pill {
-    font-size: 11px;
-    font-weight: 700;
-    color: #fff;
+    font-size: 11px; font-weight: 700; color: #fff;
     background: linear-gradient(135deg, var(--accent) 0%, #d9500a 100%);
-    padding: 7px 14px;
-    border-radius: 40px;
+    padding: 7px 14px; border-radius: 40px;
     letter-spacing: 0.4px;
     box-shadow: 0 4px 14px var(--accent-glow);
   }
@@ -149,36 +99,60 @@
   .sidebar {
     background: rgba(14,16,22,0.7);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--stroke);
     border-radius: var(--radius-lg);
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
     overflow-y: auto;
     max-height: calc(100vh - 120px);
   }
 
   .sidebar::-webkit-scrollbar { width: 6px; }
-  .sidebar::-webkit-scrollbar-track { background: transparent; }
-  .sidebar::-webkit-scrollbar-thumb {
-    background: var(--stroke-2);
-    border-radius: 3px;
+  .sidebar::-webkit-scrollbar-thumb { background: var(--stroke-2); border-radius: 3px; }
+
+  /* ---- Mode toggle ---- */
+  .mode-toggle {
+    display: flex;
+    background: var(--bg-0);
+    border: 1px solid var(--stroke);
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+  }
+
+  .mode-btn {
+    flex: 1;
+    padding: 9px;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 9px;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .mode-btn:hover { color: var(--text); }
+
+  .mode-btn.active {
+    background: linear-gradient(135deg, var(--accent) 0%, #d9500a 100%);
+    color: #fff;
+    box-shadow: 0 4px 12px var(--accent-glow);
   }
 
   /* ---- Step blocks ---- */
-  .step {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  .step { display: flex; flex-direction: column; gap: 10px; }
 
-  .step-head {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-  }
+  .step-head { display: flex; align-items: center; gap: 9px; }
 
   .step-num {
     width: 20px; height: 20px;
@@ -186,26 +160,20 @@
     background: rgba(255,122,26,0.12);
     border: 1px solid rgba(255,122,26,0.3);
     color: var(--accent-2);
-    font-size: 10px;
-    font-weight: 800;
-    display: grid;
-    place-items: center;
+    font-size: 10px; font-weight: 800;
+    display: grid; place-items: center;
     flex-shrink: 0;
   }
 
   .step-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1.2px; text-transform: uppercase;
     color: var(--text-mid);
   }
 
   .step-hint {
-    font-size: 10.5px;
-    color: var(--text-dim);
-    line-height: 1.5;
-    margin-left: 29px;
+    font-size: 10.5px; color: var(--text-dim);
+    line-height: 1.5; margin-left: 29px;
   }
 
   /* ---- Upload ---- */
@@ -215,90 +183,48 @@
     padding: 22px 14px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.2s;
     background: rgba(255,255,255,0.012);
-    position: relative;
-    overflow: hidden;
   }
 
-  .upload-zone:hover,
-  .upload-zone.dragover {
+  .upload-zone:hover, .upload-zone.dragover {
     border-color: var(--accent);
     background: rgba(255,122,26,0.04);
   }
 
   .upload-zone.has-image {
-    padding: 12px;
-    border-style: solid;
+    padding: 12px; border-style: solid;
     border-color: rgba(52,211,153,0.4);
     background: rgba(52,211,153,0.04);
   }
 
-  .upload-icon {
-    font-size: 22px;
-    display: block;
-    margin-bottom: 8px;
-    opacity: 0.7;
-  }
+  .upload-icon { font-size: 22px; display: block; margin-bottom: 8px; opacity: 0.7; }
+  .upload-title { font-size: 12.5px; font-weight: 600; color: var(--text); }
+  .upload-sub { font-size: 10.5px; color: var(--text-dim); margin-top: 4px; }
 
-  .upload-title {
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--text);
-  }
-
-  .upload-sub {
-    font-size: 10.5px;
-    color: var(--text-dim);
-    margin-top: 4px;
-  }
-
-  .upload-thumb {
-    display: none;
-    align-items: center;
-    gap: 10px;
-    text-align: left;
-  }
-
+  .upload-thumb { display: none; align-items: center; gap: 10px; text-align: left; }
   .upload-zone.has-image .upload-thumb { display: flex; }
   .upload-zone.has-image .upload-default { display: none; }
 
   .thumb-img {
-    width: 44px; height: 44px;
-    border-radius: 8px;
-    object-fit: cover;
-    border: 1px solid var(--stroke-2);
+    width: 44px; height: 44px; border-radius: 8px;
+    object-fit: cover; border: 1px solid var(--stroke-2);
   }
 
   .thumb-info { flex: 1; min-width: 0; }
-
   .thumb-name {
-    font-size: 11.5px;
-    font-weight: 600;
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    font-size: 11.5px; font-weight: 600; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-
-  .thumb-meta {
-    font-size: 10px;
-    color: var(--success);
-    margin-top: 2px;
-    font-weight: 600;
-  }
+  .thumb-meta { font-size: 10px; color: var(--success); margin-top: 2px; font-weight: 600; }
 
   .thumb-remove {
     background: rgba(255,255,255,0.06);
     border: 1px solid var(--stroke-2);
     color: var(--text-mid);
     width: 24px; height: 24px;
-    border-radius: 7px;
-    cursor: pointer;
-    font-size: 12px;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
+    border-radius: 7px; cursor: pointer; font-size: 12px;
+    display: grid; place-items: center; flex-shrink: 0;
     transition: all 0.2s;
   }
 
@@ -310,59 +236,44 @@
 
   #fileInput { display: none; }
 
-  /* ---- Auto-detect indicator ---- */
-  .detect-card {
-    background: rgba(255,122,26,0.05);
-    border: 1px solid rgba(255,122,26,0.18);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-    display: none;
-    align-items: center;
-    gap: 12px;
+  /* ---- Background presets (text card mode) ---- */
+  .bg-presets {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 7px;
   }
 
-  .detect-card.show { display: flex; }
+  .bg-swatch {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    border: 2px solid var(--stroke);
+    cursor: pointer;
+    transition: all 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
 
-  .detect-icon {
-    width: 34px; height: 34px;
-    border-radius: 9px;
-    background: linear-gradient(135deg, var(--accent), #d9500a);
+  .bg-swatch:hover { transform: scale(1.08); }
+
+  .bg-swatch.active {
+    border-color: var(--accent-2);
+    box-shadow: 0 0 0 3px rgba(255,122,26,0.2);
+  }
+
+  .bg-swatch.active::after {
+    content: '✓';
+    position: absolute;
+    inset: 0;
     display: grid;
     place-items: center;
-    font-size: 16px;
-    flex-shrink: 0;
-    box-shadow: 0 4px 12px var(--accent-glow);
-  }
-
-  .detect-info { flex: 1; min-width: 0; }
-
-  .detect-label {
-    font-size: 9.5px;
-    color: var(--text-dim);
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    font-weight: 700;
-  }
-
-  .detect-value {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent-2);
-    margin-top: 2px;
-  }
-
-  .detect-confidence {
-    font-size: 10px;
-    color: var(--text-dim);
-    margin-top: 1px;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
   }
 
   /* ---- Chips ---- */
-  .chip-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
+  .chip-grid { display: flex; flex-wrap: wrap; gap: 6px; }
 
   .chip {
     background: var(--bg-2);
@@ -371,14 +282,10 @@
     padding: 7px 12px;
     border-radius: 9px;
     cursor: pointer;
-    font-size: 11.5px;
-    font-weight: 600;
-    transition: all 0.18s ease;
+    font-size: 11.5px; font-weight: 600;
+    transition: all 0.18s;
     user-select: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    letter-spacing: 0.2px;
+    display: inline-flex; align-items: center; gap: 5px;
   }
 
   .chip:hover {
@@ -395,9 +302,7 @@
   }
 
   /* ---- Caption editor ---- */
-  .caption-wrap {
-    position: relative;
-  }
+  .caption-wrap { position: relative; }
 
   .caption-input {
     width: 100%;
@@ -421,52 +326,35 @@
     box-shadow: 0 0 0 3px rgba(255,122,26,0.1);
   }
 
-  .caption-input::placeholder {
-    color: var(--text-dim);
-    font-style: italic;
-  }
+  .caption-input::placeholder { color: var(--text-dim); font-style: italic; }
 
   .char-count {
     position: absolute;
-    bottom: 10px;
-    right: 12px;
-    font-size: 10px;
-    color: var(--text-dim);
+    bottom: 10px; right: 12px;
+    font-size: 10px; color: var(--text-dim);
     font-family: 'Inter', sans-serif;
-    font-style: normal;
-    font-weight: 600;
+    font-style: normal; font-weight: 600;
     pointer-events: none;
   }
 
   .char-count.warn { color: #ffb020; }
   .char-count.over { color: #ff6b6b; }
 
-  /* ---- Tool buttons ---- */
-  .tool-row {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
+  .tool-row { display: flex; gap: 6px; flex-wrap: wrap; }
 
   .tool-btn {
     flex: 1;
-    min-width: 0;
     background: var(--bg-2);
     border: 1px solid var(--stroke);
     color: var(--text-mid);
     padding: 8px 10px;
     border-radius: 9px;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 11px; font-weight: 600;
     cursor: pointer;
     transition: all 0.18s;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    white-space: nowrap;
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 5px; white-space: nowrap;
     font-family: 'Inter', sans-serif;
-    letter-spacing: 0.2px;
   }
 
   .tool-btn:hover {
@@ -487,24 +375,15 @@
   }
 
   /* ---- Style controls ---- */
-  .style-group {
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
+  .style-group { display: flex; flex-direction: column; gap: 7px; }
 
   .style-label {
-    font-size: 10px;
-    color: var(--text-dim);
-    letter-spacing: 1px;
-    text-transform: uppercase;
+    font-size: 10px; color: var(--text-dim);
+    letter-spacing: 1px; text-transform: uppercase;
     font-weight: 700;
   }
 
-  .swatch-row {
-    display: flex;
-    gap: 7px;
-  }
+  .swatch-row { display: flex; gap: 7px; flex-wrap: wrap; }
 
   .swatch {
     width: 28px; height: 28px;
@@ -526,19 +405,13 @@
     content: '✓';
     position: absolute;
     inset: 0;
-    display: grid;
-    place-items: center;
-    font-size: 13px;
-    font-weight: 800;
+    display: grid; place-items: center;
+    font-size: 13px; font-weight: 800;
     color: rgba(0,0,0,0.6);
     text-shadow: 0 0 3px rgba(255,255,255,0.5);
   }
 
-  /* ---- Font selector ---- */
-  .font-row {
-    display: flex;
-    gap: 6px;
-  }
+  .font-row { display: flex; gap: 6px; }
 
   .font-btn {
     flex: 1;
@@ -554,7 +427,10 @@
     font-weight: 600;
   }
 
-  .font-btn[data-font="playfair"] { font-family: 'Playfair Display', serif; font-style: italic; font-size: 13px; }
+  .font-btn[data-font="playfair"] {
+    font-family: 'Playfair Display', serif;
+    font-style: italic; font-size: 13px;
+  }
   .font-btn[data-font="inter"] { font-family: 'Inter', sans-serif; }
 
   .font-btn:hover { color: var(--text); border-color: var(--stroke-2); }
@@ -565,22 +441,15 @@
     color: var(--accent-2);
   }
 
-  /* ---- Slider ---- */
-  .slider-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+  .slider-row { display: flex; align-items: center; gap: 10px; }
 
   .slider {
     flex: 1;
     -webkit-appearance: none;
     appearance: none;
-    height: 4px;
-    border-radius: 2px;
+    height: 4px; border-radius: 2px;
     background: var(--bg-3);
-    outline: none;
-    cursor: pointer;
+    outline: none; cursor: pointer;
   }
 
   .slider::-webkit-slider-thumb {
@@ -591,36 +460,26 @@
     background: var(--accent);
     cursor: pointer;
     box-shadow: 0 0 0 3px rgba(255,122,26,0.2);
-    transition: all 0.15s;
-  }
-
-  .slider::-webkit-slider-thumb:hover {
-    transform: scale(1.15);
-    box-shadow: 0 0 0 5px rgba(255,122,26,0.25);
   }
 
   .slider::-moz-range-thumb {
     width: 15px; height: 15px;
     border-radius: 50%;
     background: var(--accent);
-    cursor: pointer;
-    border: none;
+    cursor: pointer; border: none;
   }
 
   .slider-value {
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 11px; font-weight: 700;
     color: var(--text-mid);
-    min-width: 34px;
-    text-align: right;
+    min-width: 34px; text-align: right;
     font-variant-numeric: tabular-nums;
   }
 
-  /* ==================== MAIN CANVAS AREA ==================== */
+  /* ==================== MAIN ==================== */
   .main {
     background: rgba(14,16,22,0.7);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--stroke);
     border-radius: var(--radius-lg);
     padding: 20px;
@@ -631,21 +490,15 @@
   }
 
   .main-head {
-    display: flex;
-    align-items: center;
+    display: flex; align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: wrap; gap: 10px;
   }
 
   .main-title {
-    font-size: 13px;
-    font-weight: 700;
+    font-size: 13px; font-weight: 700;
     color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    letter-spacing: -0.2px;
+    display: flex; align-items: center; gap: 8px;
   }
 
   .main-title .dot {
@@ -655,30 +508,20 @@
     box-shadow: 0 0 8px var(--accent-glow);
   }
 
-  .main-actions {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
+  .main-actions { display: flex; gap: 8px; flex-wrap: wrap; }
 
-  /* ---- Buttons ---- */
   .btn {
     padding: 9px 16px;
     border-radius: 10px;
     border: 1px solid var(--stroke-2);
     background: var(--bg-2);
     color: var(--text);
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 12px; font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    letter-spacing: 0.2px;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 6px; white-space: nowrap;
     font-family: 'Inter', sans-serif;
-    white-space: nowrap;
   }
 
   .btn:hover:not(:disabled) {
@@ -687,12 +530,7 @@
     box-shadow: 0 6px 16px rgba(0,0,0,0.4);
   }
 
-  .btn:active:not(:disabled) { transform: translateY(0); }
-
-  .btn:disabled {
-    opacity: 0.35;
-    cursor: not-allowed;
-  }
+  .btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
   .btn-primary {
     background: linear-gradient(135deg, var(--accent) 0%, #d9500a 100%);
@@ -706,9 +544,7 @@
     box-shadow: 0 8px 24px rgba(255,122,26,0.5);
   }
 
-  .btn-ghost {
-    background: transparent;
-  }
+  .btn-ghost { background: transparent; }
 
   /* ---- Preview ---- */
   .preview-container {
@@ -731,103 +567,30 @@
     background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
   }
 
-  .empty-state {
-    text-align: center;
-    padding: 40px 20px;
-    color: var(--text-dim);
-    max-width: 300px;
-  }
-
-  .empty-icon {
-    font-size: 44px;
-    opacity: 0.25;
-    margin-bottom: 14px;
-    display: block;
-  }
-
-  .empty-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-mid);
-    margin-bottom: 6px;
-  }
-
-  .empty-sub {
-    font-size: 12px;
-    line-height: 1.6;
-    color: var(--text-dim);
-  }
-
   #previewCanvas {
     max-width: 100%;
     max-height: 100%;
-    display: none;
+    display: block;
     border-radius: 4px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  }
-
-  /* ---- Progress overlay ---- */
-  .processing {
-    position: absolute;
-    inset: 0;
-    background: rgba(8,9,12,0.85);
-    backdrop-filter: blur(8px);
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    z-index: 10;
-    border-radius: var(--radius);
-  }
-
-  .processing.show { display: flex; }
-
-  .spinner {
-    width: 40px; height: 40px;
-    border: 3px solid rgba(255,122,26,0.15);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-
-  .processing-text {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-mid);
-    letter-spacing: 0.3px;
-  }
-
-  .processing-step {
-    font-size: 11px;
-    color: var(--text-dim);
   }
 
   /* ==================== BOTTOM BAR ==================== */
   .bottom-bar {
     grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
+    display: flex; align-items: center;
     justify-content: space-between;
     padding: 12px 20px;
     background: rgba(14,16,22,0.7);
     backdrop-filter: blur(20px);
     border: 1px solid var(--stroke);
     border-radius: var(--radius-lg);
-    flex-wrap: wrap;
-    gap: 12px;
+    flex-wrap: wrap; gap: 12px;
   }
 
   .pro-banner {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1;
-    min-width: 240px;
+    display: flex; align-items: center;
+    gap: 12px; flex: 1; min-width: 240px;
   }
 
   .pro-lock {
@@ -835,56 +598,39 @@
     border-radius: 9px;
     background: linear-gradient(135deg, rgba(255,122,26,0.15), rgba(255,122,26,0.05));
     border: 1px solid rgba(255,122,26,0.25);
-    display: grid;
-    place-items: center;
-    font-size: 14px;
-    flex-shrink: 0;
+    display: grid; place-items: center;
+    font-size: 14px; flex-shrink: 0;
   }
 
   .pro-text .title {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text);
-    letter-spacing: 0.2px;
+    font-size: 12px; font-weight: 700; color: var(--text);
   }
 
   .pro-text .desc {
-    font-size: 10.5px;
-    color: var(--text-dim);
-    margin-top: 2px;
+    font-size: 10.5px; color: var(--text-dim); margin-top: 2px;
   }
 
   .pro-cta {
     background: linear-gradient(135deg, var(--accent) 0%, #d9500a 100%);
-    border: none;
-    color: #fff;
-    padding: 9px 18px;
-    border-radius: 10px;
-    font-size: 11.5px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    cursor: pointer;
+    border: none; color: #fff;
+    padding: 9px 18px; border-radius: 10px;
+    font-size: 11.5px; font-weight: 800;
+    letter-spacing: 0.5px; cursor: pointer;
     transition: all 0.2s;
     box-shadow: 0 4px 14px var(--accent-glow);
     text-transform: uppercase;
     font-family: 'Inter', sans-serif;
   }
 
-  .pro-cta:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(255,122,26,0.55);
-  }
+  .pro-cta:hover { transform: translateY(-1px); }
 
   /* ==================== TOAST ==================== */
   .toast-stack {
     position: fixed;
-    bottom: 24px;
-    left: 50%;
+    bottom: 24px; left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    z-index: 9999;
+    display: flex; flex-direction: column;
+    gap: 8px; z-index: 9999;
     pointer-events: none;
   }
 
@@ -894,21 +640,15 @@
     color: var(--text);
     padding: 11px 18px;
     border-radius: 12px;
-    font-size: 12.5px;
-    font-weight: 600;
+    font-size: 12.5px; font-weight: 600;
     box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    letter-spacing: 0.2px;
+    display: flex; align-items: center; gap: 9px;
     animation: toastIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     min-width: 200px;
     font-family: 'Inter', sans-serif;
   }
 
-  .toast.exit {
-    animation: toastOut 0.25s ease forwards;
-  }
+  .toast.exit { animation: toastOut 0.25s ease forwards; }
 
   @keyframes toastIn {
     from { opacity: 0; transform: translateY(20px) scale(0.95); }
@@ -922,22 +662,20 @@
   .toast-icon {
     width: 20px; height: 20px;
     border-radius: 6px;
-    display: grid;
-    place-items: center;
-    font-size: 11px;
-    flex-shrink: 0;
+    display: grid; place-items: center;
+    font-size: 11px; flex-shrink: 0;
   }
 
   .toast-icon.success { background: rgba(52,211,153,0.15); color: var(--success); }
   .toast-icon.info { background: rgba(255,122,26,0.15); color: var(--accent-2); }
   .toast-icon.error { background: rgba(255,80,80,0.15); color: #ff6b6b; }
 
+  /* ---- Utility: hide in mode ---- */
+  .hide-mode { display: none !important; }
+
   /* ==================== RESPONSIVE ==================== */
   @media (max-width: 1024px) {
-    .app {
-      grid-template-columns: 1fr;
-      min-height: auto;
-    }
+    .app { grid-template-columns: 1fr; min-height: auto; }
     .sidebar, .main { max-height: none; }
     .main { min-height: 480px; }
   }
@@ -948,11 +686,11 @@
     .header { padding: 12px 14px; border-radius: 16px; }
     .sidebar, .main { padding: 16px; border-radius: 16px; }
     .bottom-bar { padding: 12px 14px; border-radius: 16px; flex-direction: column; align-items: stretch; }
-    .pro-banner { min-width: 0; }
     .main-actions { width: 100%; }
     .main-actions .btn { flex: 1; }
     .credit-pill { display: none; }
     .preview-container { min-height: 260px; }
+    .bg-presets { grid-template-columns: repeat(4, 1fr); }
   }
 </style>
 </head>
@@ -966,91 +704,152 @@
       <div class="logo-mark">◆</div>
       <div class="logo-text">
         <div class="name">Sumxn Studio</div>
-        <div class="sub">Auto Caption Engine</div>
+        <div class="sub">Caption Engine</div>
       </div>
     </div>
     <div class="header-right">
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        <span>Engine Ready</span>
-      </div>
-      <div class="credit-pill">@sumxn-official(owner)</div>
+      <div class="credit-pill">@sumxn-official</div>
     </div>
   </header>
 
   <!-- ==================== SIDEBAR ==================== -->
   <aside class="sidebar">
 
-    <!-- STEP 1: Upload -->
-    <div class="step">
-      <div class="step-head">
-        <div class="step-num">1</div>
-        <div class="step-title">Upload Image</div>
+    <!-- MODE TOGGLE -->
+    <div class="mode-toggle">
+      <button class="mode-btn active" data-mode="text">✦ Text Card</button>
+      <button class="mode-btn" data-mode="photo">▣ Photo Caption</button>
+    </div>
+
+    <!-- ============ TEXT CARD MODE ============ -->
+    <div id="textModePanel">
+
+      <!-- Background -->
+      <div class="step">
+        <div class="step-head">
+          <div class="step-num">1</div>
+          <div class="step-title">Background</div>
+        </div>
+        <div class="bg-presets" id="bgPresets">
+          <div class="bg-swatch active" data-bg="linear-gradient(135deg,#ff7a1a,#d9500a)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#0ea5e9,#1e3a8a)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#10b981,#065f46)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#f43f5e,#7f1d1d)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#8b5cf6,#4c1d95)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#facc15,#b45309)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#1f2937,#0f172a)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#fda4af,#be185d)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#67e8f9,#0891b2)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#fb923c,#7c2d12)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#a3e635,#3f6212)"></div>
+          <div class="bg-swatch" data-bg="#ffffff"></div>
+          <div class="bg-swatch" data-bg="#0a0a0a"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#f5f5f4,#a8a29e)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#c084fc,#f472b6)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#22d3ee,#7c3aed)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#fcd34d,#dc2626)"></div>
+          <div class="bg-swatch" data-bg="linear-gradient(135deg,#334155,#0f172a)"></div>
+        </div>
       </div>
 
-      <div class="upload-zone" id="uploadZone">
-        <div class="upload-default">
-          <span class="upload-icon">⬆</span>
-          <div class="upload-title">Drop image or click to browse</div>
-          <div class="upload-sub">JPG · PNG · WEBP · max 15MB</div>
+      <!-- Theme -->
+      <div class="step">
+        <div class="step-head">
+          <div class="step-num">2</div>
+          <div class="step-title">Caption Theme</div>
         </div>
-        <div class="upload-thumb">
-          <img id="thumbImg" class="thumb-img" alt="">
-          <div class="thumb-info">
-            <div class="thumb-name" id="thumbName">image.jpg</div>
-            <div class="thumb-meta" id="thumbMeta">Ready</div>
+        <div class="chip-grid" id="themeChipsText">
+          <div class="chip active" data-theme="village">🏔️ Village Roots</div>
+          <div class="chip" data-theme="study">📚 Study Abroad</div>
+          <div class="chip" data-theme="hustle">💰 The Hustle</div>
+          <div class="chip" data-theme="today">🌅 Living Today</div>
+          <div class="chip" data-theme="memories">📸 Memories</div>
+          <div class="chip" data-theme="life">🌱 Life Journey</div>
+        </div>
+      </div>
+
+      <!-- Caption -->
+      <div class="step">
+        <div class="step-head">
+          <div class="step-num">3</div>
+          <div class="step-title">Caption</div>
+        </div>
+        <div class="caption-wrap">
+          <textarea id="captionText" class="caption-input" placeholder="Write or generate a caption..." maxlength="220"></textarea>
+          <div class="char-count" id="charCountText">0/220</div>
+        </div>
+        <div class="tool-row">
+          <button class="tool-btn primary" id="regenTextBtn">✦ Generate</button>
+          <button class="tool-btn" id="creditTextBtn">＋ Credit</button>
+          <button class="tool-btn" id="clearTextBtn">✕ Clear</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ============ PHOTO CAPTION MODE ============ -->
+    <div id="photoModePanel" class="hide-mode">
+
+      <!-- Upload -->
+      <div class="step">
+        <div class="step-head">
+          <div class="step-num">1</div>
+          <div class="step-title">Upload Image</div>
+        </div>
+        <div class="upload-zone" id="uploadZone">
+          <div class="upload-default">
+            <span class="upload-icon">⬆</span>
+            <div class="upload-title">Drop image or click to browse</div>
+            <div class="upload-sub">JPG · PNG · WEBP · max 15MB</div>
           </div>
-          <button class="thumb-remove" id="thumbRemove" title="Remove">✕</button>
+          <div class="upload-thumb">
+            <img id="thumbImg" class="thumb-img" alt="">
+            <div class="thumb-info">
+              <div class="thumb-name" id="thumbName">image.jpg</div>
+              <div class="thumb-meta" id="thumbMeta">Ready</div>
+            </div>
+            <button class="thumb-remove" id="thumbRemove" title="Remove">✕</button>
+          </div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*">
+      </div>
+
+      <!-- Theme -->
+      <div class="step">
+        <div class="step-head">
+          <div class="step-num">2</div>
+          <div class="step-title">Caption Theme</div>
+        </div>
+        <div class="chip-grid" id="themeChipsPhoto">
+          <div class="chip active" data-theme="village">🏔️ Village Roots</div>
+          <div class="chip" data-theme="study">📚 Study Abroad</div>
+          <div class="chip" data-theme="hustle">💰 The Hustle</div>
+          <div class="chip" data-theme="today">🌅 Living Today</div>
+          <div class="chip" data-theme="memories">📸 Memories</div>
+          <div class="chip" data-theme="life">🌱 Life Journey</div>
         </div>
       </div>
-      <input type="file" id="fileInput" accept="image/*">
+
+      <!-- Caption -->
+      <div class="step">
+        <div class="step-head">
+          <div class="step-num">3</div>
+          <div class="step-title">Caption</div>
+        </div>
+        <div class="caption-wrap">
+          <textarea id="captionPhoto" class="caption-input" placeholder="Write or generate a caption..." maxlength="220"></textarea>
+          <div class="char-count" id="charCountPhoto">0/220</div>
+        </div>
+        <div class="tool-row">
+          <button class="tool-btn primary" id="regenPhotoBtn">✦ Generate</button>
+          <button class="tool-btn" id="creditPhotoBtn">＋ Credit</button>
+          <button class="tool-btn" id="clearPhotoBtn">✕ Clear</button>
+        </div>
+      </div>
+
     </div>
 
-    <!-- AUTO DETECT CARD -->
-    <div class="detect-card" id="detectCard">
-      <div class="detect-icon">✦</div>
-      <div class="detect-info">
-        <div class="detect-label">Auto-Detected Theme</div>
-        <div class="detect-value" id="detectValue">—</div>
-        <div class="detect-confidence" id="detectConfidence">—</div>
-      </div>
-    </div>
-
-    <!-- STEP 2: Theme -->
-    <div class="step">
-      <div class="step-head">
-        <div class="step-num">2</div>
-        <div class="step-title">Caption Theme</div>
-      </div>
-      <div class="step-hint">Auto-picked from your image. Tap to override.</div>
-      <div class="chip-grid" id="themeChips">
-        <div class="chip active" data-theme="village">🏔️ Village Roots(nature)</div>
-        <div class="chip" data-theme="study">📚 Study Abroad</div>
-        <div class="chip" data-theme="hustle">💰 The Hustle(money minded)</div>
-        <div class="chip" data-theme="today">🌅 Living Today(living in the moment)</div>
-        <div class="chip" data-theme="memories">📸 Memories</div>
-        <div class="chip" data-theme="life">🌱 Life Journey</div>
-      </div>
-    </div>
-
-    <!-- STEP 3: Caption -->
-    <div class="step">
-      <div class="step-head">
-        <div class="step-num">3</div>
-        <div class="step-title">Caption</div>
-      </div>
-      <div class="caption-wrap">
-        <textarea id="captionInput" class="caption-input" placeholder="Upload an image to auto-generate..." maxlength="220"></textarea>
-        <div class="char-count" id="charCount">0/220</div>
-      </div>
-      <div class="tool-row">
-        <button class="tool-btn primary" id="regenBtn" disabled>✦ Regenerate</button>
-        <button class="tool-btn" id="creditBtn">＋ Credit</button>
-        <button class="tool-btn" id="clearBtn">✕ Clear</button>
-      </div>
-    </div>
-
-    <!-- STEP 4: Style -->
+    <!-- ============ SHARED STYLE CONTROLS ============ -->
     <div class="step">
       <div class="step-head">
         <div class="step-num">4</div>
@@ -1066,8 +865,8 @@
       </div>
 
       <div class="style-group">
-        <div class="style-label">Color</div>
-        <div class="swatch-row">
+        <div class="style-label">Text Color</div>
+        <div class="swatch-row" id="textColors">
           <div class="swatch active" data-color="#ffffff" style="background:#ffffff"></div>
           <div class="swatch" data-color="#ffd166" style="background:#ffd166"></div>
           <div class="swatch" data-color="#ff8a3d" style="background:#ff8a3d"></div>
@@ -1077,7 +876,7 @@
         </div>
       </div>
 
-      <div class="style-group">
+      <div class="style-group" id="posGroup">
         <div class="style-label">Position</div>
         <div class="chip-grid" id="posChips">
           <div class="chip" data-pos="top">Top</div>
@@ -1094,7 +893,7 @@
         </div>
       </div>
 
-      <div class="style-group">
+      <div class="style-group" id="overlayGroup">
         <div class="style-label">Overlay Darkness</div>
         <div class="slider-row">
           <input type="range" class="slider" id="overlaySlider" min="0" max="80" value="45">
@@ -1113,25 +912,14 @@
         Live Preview
       </div>
       <div class="main-actions">
-        <button class="btn btn-ghost" id="resetBtn" disabled>↺ Reset</button>
-        <button class="btn" id="copyBtn" disabled>📋 Copy Caption</button>
-        <button class="btn btn-primary" id="downloadBtn" disabled>⬇ Download PNG</button>
+        <button class="btn btn-ghost" id="resetBtn">↺ Reset</button>
+        <button class="btn" id="copyBtn">📋 Copy Caption</button>
+        <button class="btn btn-primary" id="downloadBtn">⬇ Download PNG</button>
       </div>
     </div>
 
     <div class="preview-container" id="previewContainer">
-      <div class="empty-state" id="emptyState">
-        <span class="empty-icon">▣</span>
-        <div class="empty-title">No image loaded</div>
-        <div class="empty-sub">Upload an image on the left. The engine will auto-detect the theme and generate a caption for you.</div>
-      </div>
       <canvas id="previewCanvas"></canvas>
-
-      <div class="processing" id="processing">
-        <div class="spinner"></div>
-        <div class="processing-text">Generating caption...</div>
-        <div class="processing-step" id="processingStep">Analyzing image</div>
-      </div>
     </div>
   </main>
 
@@ -1149,7 +937,6 @@
 
 </div>
 
-<!-- ==================== TOASTS ==================== -->
 <div class="toast-stack" id="toastStack"></div>
 
 <script>
@@ -1157,7 +944,7 @@
   'use strict';
 
   // ============================================================
-  //  CAPTION ENGINE — first person, 18yo Nepali village boy
+  //  CAPTION ENGINE
   // ============================================================
   const CAPTIONS = {
     village: [
@@ -1250,11 +1037,15 @@
   //  STATE
   // ============================================================
   const state = {
+    mode: 'text',            // 'text' | 'photo'
+    // text card
+    bg: 'linear-gradient(135deg,#ff7a1a,#d9500a)',
+    // photo
     image: null,
     imageName: '',
     imageSize: 0,
+    // shared
     theme: 'village',
-    autoDetected: false,
     textColor: '#ffffff',
     position: 'bottom',
     font: 'playfair',
@@ -1263,48 +1054,13 @@
     lastCaption: ''
   };
 
-  const THEME_LABELS = {
-    village: '🏔️ Village Roots',
-    study: '📚 Study Abroad',
-    hustle: '💰 The Hustle',
-    today: '🌅 Living Today',
-    memories: '📸 Memories',
-    life: '🌱 Life Journey'
-  };
-
   // ============================================================
-  //  DOM REFS
+  //  DOM
   // ============================================================
   const $ = (id) => document.getElementById(id);
-  const uploadZone = $('uploadZone');
-  const fileInput = $('fileInput');
-  const thumbImg = $('thumbImg');
-  const thumbName = $('thumbName');
-  const thumbMeta = $('thumbMeta');
-  const thumbRemove = $('thumbRemove');
-  const detectCard = $('detectCard');
-  const detectValue = $('detectValue');
-  const detectConfidence = $('detectConfidence');
-  const captionInput = $('captionInput');
-  const charCount = $('charCount');
-  const regenBtn = $('regenBtn');
-  const creditBtn = $('creditBtn');
-  const clearBtn = $('clearBtn');
-  const resetBtn = $('resetBtn');
-  const copyBtn = $('copyBtn');
-  const downloadBtn = $('downloadBtn');
-  const proBtn = $('proBtn');
-  const previewCanvas = $('previewCanvas');
-  const emptyState = $('emptyState');
-  const processing = $('processing');
-  const processingStep = $('processingStep');
-  const sizeSlider = $('sizeSlider');
-  const sizeValue = $('sizeValue');
-  const overlaySlider = $('overlaySlider');
-  const overlayValue = $('overlayValue');
+  const canvas = $('previewCanvas');
+  const ctx = canvas.getContext('2d');
   const toastStack = $('toastStack');
-
-  const ctx = previewCanvas.getContext('2d');
 
   // ============================================================
   //  TOASTS
@@ -1318,129 +1074,40 @@
     setTimeout(() => {
       el.classList.add('exit');
       setTimeout(() => el.remove(), 250);
-    }, 2400);
+    }, 2200);
   }
 
   // ============================================================
-  //  AUTO THEME DETECTION
-  //  Heuristic image analysis — analyzes color, brightness,
-  //  and composition to guess the most fitting caption theme.
+  //  MODE SWITCHING
   // ============================================================
-  function analyzeImage(img) {
-    const sampleSize = 64;
-    const sampleCanvas = document.createElement('canvas');
-    sampleCanvas.width = sampleSize;
-    sampleCanvas.height = sampleSize;
-    const sctx = sampleCanvas.getContext('2d');
-    sctx.drawImage(img, 0, 0, sampleSize, sampleSize);
-    const data = sctx.getImageData(0, 0, sampleSize, sampleSize).data;
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.mode = btn.dataset.mode;
 
-    let rSum = 0, gSum = 0, bSum = 0;
-    let brightness = 0;
-    let warmth = 0;      // reds/yellows vs blues
-    let greenDominant = 0;
-    let blueDominant = 0;
-    let highContrast = 0;
-    let prevLum = null;
-
-    const totalPixels = sampleSize * sampleSize;
-
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-      rSum += r; gSum += g; bSum += b;
-
-      const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-      brightness += lum;
-
-      // Warmth: red+green vs blue
-      warmth += (r + g) - 2 * b;
-
-      // Green scenes (nature / village)
-      if (g > r + 10 && g > b + 10) greenDominant++;
-
-      // Blue scenes (sky / ocean / night)
-      if (b > r + 20 && b > g + 10) blueDominant++;
-
-      // Contrast detection
-      if (prevLum !== null && Math.abs(lum - prevLum) > 60) highContrast++;
-      prevLum = lum;
-    }
-
-    const avgR = rSum / totalPixels;
-    const avgG = gSum / totalPixels;
-    const avgB = bSum / totalPixels;
-    const avgBrightness = brightness / totalPixels;
-    const avgWarmth = warmth / totalPixels;
-    const greenRatio = greenDominant / totalPixels;
-    const blueRatio = blueDominant / totalPixels;
-    const contrastRatio = highContrast / totalPixels;
-
-    // ---- Scoring each theme ----
-    const scores = {
-      village: 0,
-      study: 0,
-      hustle: 0,
-      today: 0,
-      memories: 0,
-      life: 0
-    };
-
-    // Village: green nature, warm earthy tones, medium brightness
-    if (greenRatio > 0.25) scores.village += 4;
-    if (greenRatio > 0.15) scores.village += 2;
-    if (avgWarmth > 5) scores.village += 2;
-    if (avgBrightness > 100 && avgBrightness < 190) scores.village += 1;
-    if (contrastRatio > 0.05) scores.village += 1;
-
-    // Study: cool tones, medium/dark, structured
-    if (avgB > avgR && avgB > avgG) scores.study += 2;
-    if (avgBrightness < 130) scores.study += 2;
-    if (blueRatio > 0.2) scores.study += 1;
-    if (contrastRatio > 0.04) scores.study += 1;
-
-    // Hustle: dark, high contrast, moody
-    if (avgBrightness < 90) scores.hustle += 3;
-    if (contrastRatio > 0.08) scores.hustle += 3;
-    if (avgWarmth > 0 && avgBrightness < 120) scores.hustle += 2;
-    if (blueRatio < 0.1 && greenRatio < 0.1) scores.hustle += 1;
-
-    // Today (Living Today): bright, warm, golden-hour feel
-    if (avgBrightness > 160) scores.today += 3;
-    if (avgWarmth > 15) scores.today += 3;
-    if (avgR > avgB + 15) scores.today += 2;
-    if (greenRatio < 0.15 && blueRatio < 0.15) scores.today += 1;
-
-    // Memories: warm/soft, low contrast, nostalgic
-    if (contrastRatio < 0.03) scores.memories += 3;
-    if (avgBrightness > 120 && avgBrightness < 200) scores.memories += 2;
-    if (avgWarmth > 8) scores.memories += 2;
-    if (blueRatio < 0.15) scores.memories += 1;
-
-    // Life Journey: balanced, versatile
-    scores.life += 2;
-    if (avgBrightness > 90 && avgBrightness < 170) scores.life += 2;
-    if (contrastRatio > 0.03 && contrastRatio < 0.1) scores.life += 1;
-    if (greenRatio > 0.1 && blueRatio > 0.05) scores.life += 1;
-
-    // ---- Pick highest ----
-    let best = 'life';
-    let bestScore = -1;
-    let totalScore = 0;
-    for (const [theme, score] of Object.entries(scores)) {
-      totalScore += score;
-      if (score > bestScore) {
-        bestScore = score;
-        best = theme;
+      if (state.mode === 'text') {
+        $('textModePanel').classList.remove('hide-mode');
+        $('photoModePanel').classList.add('hide-mode');
+        $('posGroup').style.display = 'none';
+        $('overlayGroup').style.display = 'none';
+        // In text mode, "position" is always center
+        state.position = 'center';
+        render();
+      } else {
+        $('textModePanel').classList.add('hide-mode');
+        $('photoModePanel').classList.remove('hide-mode');
+        $('posGroup').style.display = '';
+        $('overlayGroup').style.display = '';
+        // Restore bottom position for photo
+        state.position = 'bottom';
+        document.querySelectorAll('#posChips .chip').forEach(c => {
+          c.classList.toggle('active', c.dataset.pos === 'bottom');
+        });
+        render();
       }
-    }
-
-    // Confidence estimate
-    const confidence = Math.min(98, Math.round((bestScore / Math.max(totalScore, 1)) * 100 * 1.4));
-
-    return { theme: best, confidence, scores };
-  }
+    });
+  });
 
   // ============================================================
   //  CAPTION PICKING
@@ -1448,8 +1115,7 @@
   function pickCaption(theme) {
     const pool = CAPTIONS[theme] || CAPTIONS.village;
     if (pool.length === 1) return pool[0];
-    let choice;
-    let tries = 0;
+    let choice, tries = 0;
     do {
       choice = pool[Math.floor(Math.random() * pool.length)];
       tries++;
@@ -1459,18 +1125,199 @@
   }
 
   // ============================================================
-  //  FILE HANDLING
+  //  BACKGROUND SWATCHES (text mode)
   // ============================================================
+  document.querySelectorAll('.bg-swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+      document.querySelectorAll('.bg-swatch').forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+      state.bg = sw.dataset.bg;
+      render();
+    });
+  });
+
+  // ============================================================
+  //  THEME CHIPS (both modes)
+  // ============================================================
+  function bindThemeChips(containerId, textareaId, charCountId) {
+    document.querySelectorAll(`#${containerId} .chip`).forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll(`#${containerId} .chip`).forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        state.theme = chip.dataset.theme;
+        const ta = $(textareaId);
+        ta.value = pickCaption(state.theme);
+        updateCharCount(charCountId, textareaId);
+        render();
+      });
+    });
+  }
+  bindThemeChips('themeChipsText', 'captionText', 'charCountText');
+  bindThemeChips('themeChipsPhoto', 'captionPhoto', 'charCountPhoto');
+
+  // ============================================================
+  //  CAPTION TEXTAREAS + TOOLS
+  // ============================================================
+  function updateCharCount(countId, taId) {
+    const len = $(taId).value.length;
+    const el = $(countId);
+    el.textContent = `${len}/220`;
+    el.classList.toggle('warn', len > 180 && len <= 220);
+    el.classList.toggle('over', len > 220);
+  }
+
+  function bindCaptionTools(taId, countId, regenId, creditId, clearId) {
+    const ta = $(taId);
+
+    ta.addEventListener('input', () => {
+      updateCharCount(countId, taId);
+      render();
+    });
+
+    $(regenId).addEventListener('click', () => {
+      ta.value = pickCaption(state.theme);
+      updateCharCount(countId, taId);
+      render();
+      toast('New caption generated', 'info');
+    });
+
+    $(creditId).addEventListener('click', () => {
+      const val = ta.value.trim();
+      if (val.includes('@sumxn-official')) {
+        toast('Credit already added', 'info');
+        return;
+      }
+      ta.value = val ? val + '\n\n@sumxn-official' : '@sumxn-official';
+      updateCharCount(countId, taId);
+      render();
+      toast('Credit added', 'success');
+    });
+
+    $(clearId).addEventListener('click', () => {
+      ta.value = '';
+      updateCharCount(countId, taId);
+      render();
+    });
+  }
+
+  bindCaptionTools('captionText', 'charCountText', 'regenTextBtn', 'creditTextBtn', 'clearTextBtn');
+  bindCaptionTools('captionPhoto', 'charCountPhoto', 'regenPhotoBtn', 'creditPhotoBtn', 'clearPhotoBtn');
+
+  // ============================================================
+  //  POSITION CHIPS
+  // ============================================================
+  document.querySelectorAll('#posChips .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#posChips .chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      state.position = chip.dataset.pos;
+      render();
+    });
+  });
+
+  // ============================================================
+  //  TEXT COLOR SWATCHES
+  // ============================================================
+  document.querySelectorAll('#textColors .swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+      document.querySelectorAll('#textColors .swatch').forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+      state.textColor = sw.dataset.color;
+      render();
+    });
+  });
+
+  // ============================================================
+  //  FONT BUTTONS
+  // ============================================================
+  document.querySelectorAll('.font-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.font = btn.dataset.font;
+      render();
+    });
+  });
+
+  // ============================================================
+  //  SLIDERS
+  // ============================================================
+  $('sizeSlider').addEventListener('input', (e) => {
+    state.sizePercent = +e.target.value;
+    $('sizeValue').textContent = e.target.value;
+    render();
+  });
+
+  $('overlaySlider').addEventListener('input', (e) => {
+    state.overlayOpacity = +e.target.value;
+    $('overlayValue').textContent = e.target.value;
+    render();
+  });
+
+  // ============================================================
+  //  PHOTO UPLOAD
+  // ============================================================
+  const uploadZone = $('uploadZone');
+  const fileInput = $('fileInput');
+
+  uploadZone.addEventListener('click', (e) => {
+    if (e.target.closest('.thumb-remove')) return;
+    fileInput.click();
+  });
+
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files[0]) handleFile(e.target.files[0]);
+  });
+
+  $('thumbRemove').addEventListener('click', (e) => {
+    e.stopPropagation();
+    state.image = null;
+    state.imageName = '';
+    uploadZone.classList.remove('has-image');
+    $('thumbImg').src = '';
+    fileInput.value = '';
+    render();
+    toast('Image removed', 'info');
+  });
+
+  ['dragenter', 'dragover'].forEach(ev => {
+    uploadZone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(ev => {
+    uploadZone.addEventListener(ev, (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+    });
+  });
+  uploadZone.addEventListener('drop', (e) => {
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
+  });
+
+  document.addEventListener('paste', (e) => {
+    if (state.mode !== 'photo') return;
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+      if (item.type.startsWith('image/')) {
+        handleFile(item.getAsFile());
+        break;
+      }
+    }
+  });
+
   function handleFile(file) {
     if (!file || !file.type.startsWith('image/')) {
-      toast('Please upload an image file', 'error');
+      toast('Please upload an image', 'error');
       return;
     }
     if (file.size > 15 * 1024 * 1024) {
       toast('Image too large (max 15MB)', 'error');
       return;
     }
-
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = new Image();
@@ -1478,49 +1325,17 @@
         state.image = img;
         state.imageName = file.name;
         state.imageSize = file.size;
-        updateUploadUI();
-        runAutoGeneration();
+        uploadZone.classList.add('has-image');
+        $('thumbImg').src = img.src;
+        $('thumbName').textContent = file.name;
+        $('thumbMeta').textContent = `Ready · ${formatBytes(file.size)}`;
+        render();
+        toast('Image loaded', 'success');
       };
       img.onerror = () => toast('Could not read image', 'error');
       img.src = e.target.result;
     };
     reader.readAsDataURL(file);
-  }
-
-  function updateUploadUI() {
-    uploadZone.classList.add('has-image');
-    thumbImg.src = state.image.src;
-    thumbName.textContent = state.imageName;
-    thumbMeta.textContent = `Ready · ${formatBytes(state.imageSize)}`;
-
-    // Enable action buttons
-    resetBtn.disabled = false;
-    copyBtn.disabled = false;
-    downloadBtn.disabled = false;
-    regenBtn.disabled = false;
-
-    emptyState.style.display = 'none';
-    previewCanvas.style.display = 'block';
-  }
-
-  function resetAll() {
-    state.image = null;
-    state.imageName = '';
-    state.imageSize = 0;
-    state.lastCaption = '';
-    uploadZone.classList.remove('has-image');
-    thumbImg.src = '';
-    detectCard.classList.remove('show');
-    captionInput.value = '';
-    updateCharCount();
-    previewCanvas.style.display = 'none';
-    emptyState.style.display = '';
-    resetBtn.disabled = true;
-    copyBtn.disabled = true;
-    downloadBtn.disabled = true;
-    regenBtn.disabled = true;
-    fileInput.value = '';
-    toast('Workspace reset', 'info');
   }
 
   function formatBytes(bytes) {
@@ -1530,73 +1345,104 @@
   }
 
   // ============================================================
-  //  AUTO GENERATION PIPELINE
+  //  MAIN RENDER
   // ============================================================
-  function runAutoGeneration() {
-    if (!state.image) return;
+  function render() {
+    const textareaId = state.mode === 'text' ? 'captionText' : 'captionPhoto';
+    const text = $(textareaId).value.trim();
 
-    processing.classList.add('show');
-    processingStep.textContent = 'Analyzing image';
-
-    setTimeout(() => {
-      processingStep.textContent = 'Detecting theme';
-      const result = analyzeImage(state.image);
-      state.theme = result.theme;
-      state.autoDetected = true;
-
-      // Update detect card
-      detectCard.classList.add('show');
-      detectValue.textContent = THEME_LABELS[result.theme];
-      detectConfidence.textContent = `${result.confidence}% confidence · tap a theme to override`;
-
-      // Sync chips
-      document.querySelectorAll('#themeChips .chip').forEach(c => {
-        c.classList.toggle('active', c.dataset.theme === result.theme);
-      });
-
-      setTimeout(() => {
-        processingStep.textContent = 'Writing caption';
-        const caption = pickCaption(result.theme);
-        captionInput.value = caption;
-        updateCharCount();
-
-        setTimeout(() => {
-          processing.classList.remove('show');
-          renderPreview();
-          toast(`Auto-generated · ${THEME_LABELS[result.theme]}`, 'success');
-        }, 200);
-      }, 250);
-    }, 350);
+    if (state.mode === 'text') {
+      renderTextCard(text);
+    } else {
+      renderPhotoCaption(text);
+    }
   }
 
-  // ============================================================
-  //  PREVIEW RENDER
-  // ============================================================
-  function renderPreview() {
-    if (!state.image) return;
+  // ---- TEXT CARD MODE ----
+  function renderTextCard(text) {
+    const W = 1080, H = 1080;
+    canvas.width = W;
+    canvas.height = H;
+
+    // Background (gradient string or solid color)
+    if (state.bg.startsWith('linear-gradient')) {
+      const match = state.bg.match(/linear-gradient\(([^,]+),(.+)\)/);
+      const angle = parseGradientAngle(match[1]);
+      const stops = match[2].split(',').map(s => s.trim());
+      const grad = buildGradient(ctx, angle, W, H, stops);
+      ctx.fillStyle = grad;
+    } else {
+      ctx.fillStyle = state.bg;
+    }
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle vignette
+    const vign = ctx.createRadialGradient(W/2, H/2, H*0.2, W/2, H/2, H*0.75);
+    vign.addColorStop(0, 'rgba(0,0,0,0)');
+    vign.addColorStop(1, 'rgba(0,0,0,0.18)');
+    ctx.fillStyle = vign;
+    ctx.fillRect(0, 0, W, H);
+
+    if (!text) {
+      // Placeholder
+      ctx.font = `500 28px "Inter", system-ui, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = 'rgba(255,255,255,0.4)';
+      ctx.fillText('Your caption will appear here', W/2, H/2);
+      updateActionState(true);
+      return;
+    }
+
+    // Text rendering
+    drawWrappedText(text, W, H, true);
+
+    // Credit watermark
+    drawCredit(W, H, 60, 60);
+
+    updateActionState(false);
+  }
+
+  // ---- PHOTO CAPTION MODE ----
+  function renderPhotoCaption(text) {
+    if (!state.image) {
+      // Empty state - just show dark placeholder
+      canvas.width = 1080;
+      canvas.height = 1080;
+      ctx.fillStyle = '#0a0a0a';
+      ctx.fillRect(0, 0, 1080, 1080);
+      ctx.font = `500 26px "Inter", system-ui, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.fillText('Upload an image to begin', 540, 540);
+      updateActionState(true);
+      return;
+    }
 
     const img = state.image;
     const MAX = 1400;
-    const MAX_H = 1400;
-
     let w = img.naturalWidth;
     let h = img.naturalHeight;
-
-    // Downscale only if very large (keep quality for download)
-    const scale = Math.min(1, MAX / w, MAX_H / h);
+    const scale = Math.min(1, MAX / w, MAX / h);
     w = Math.round(w * scale);
     h = Math.round(h * scale);
 
-    previewCanvas.width = w;
-    previewCanvas.height = h;
-
+    canvas.width = w;
+    canvas.height = h;
     ctx.clearRect(0, 0, w, h);
     ctx.drawImage(img, 0, 0, w, h);
 
-    const text = captionInput.value.trim();
-    if (!text) return;
+    if (text) {
+      drawWrappedText(text, w, h, false);
+    }
 
-    // Font config
+    drawCredit(w, h, Math.round(w * 0.03), Math.round(w * 0.03));
+    updateActionState(false);
+  }
+
+  // ---- Text drawing (shared) ----
+  function drawWrappedText(text, w, h, isTextCard) {
     const fontSizePx = Math.round(w * (state.sizePercent / 1000));
     const fontFamily = state.font === 'playfair'
       ? '"Playfair Display", Georgia, serif'
@@ -1607,7 +1453,6 @@
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    // Word wrap
     const padding = Math.round(w * 0.07);
     const maxTextWidth = w - padding * 2;
     const words = text.split(/\s+/);
@@ -1628,9 +1473,10 @@
     const lineHeight = fontSizePx * 1.35;
     const totalTextHeight = lines.length * lineHeight;
 
-    // Vertical anchor
     let startY;
-    if (state.position === 'top') {
+    if (isTextCard) {
+      startY = (h - totalTextHeight) / 2 + lineHeight / 2;
+    } else if (state.position === 'top') {
       startY = padding + fontSizePx;
     } else if (state.position === 'center') {
       startY = (h - totalTextHeight) / 2 + lineHeight / 2;
@@ -1638,224 +1484,130 @@
       startY = h - padding - totalTextHeight + lineHeight / 2;
     }
 
-    // Overlay gradient for readability
-    const op = state.overlayOpacity / 100;
-    if (state.position === 'top') {
-      const grad = ctx.createLinearGradient(0, 0, 0, Math.min(h, totalTextHeight + padding * 3));
-      grad.addColorStop(0, `rgba(0,0,0,${op})`);
-      grad.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, w, Math.min(h, totalTextHeight + padding * 3));
-    } else if (state.position === 'bottom') {
-      const gradStart = Math.max(0, h - (totalTextHeight + padding * 3));
-      const grad = ctx.createLinearGradient(0, gradStart, 0, h);
-      grad.addColorStop(0, 'rgba(0,0,0,0)');
-      grad.addColorStop(1, `rgba(0,0,0,${op})`);
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, gradStart, w, h - gradStart);
-    } else {
-      // center — uniform dark band
-      const bandTop = Math.max(0, (h - totalTextHeight) / 2 - padding);
-      const bandH = totalTextHeight + padding * 2;
-      ctx.fillStyle = `rgba(0,0,0,${op * 0.85})`;
-      ctx.fillRect(0, bandTop, w, bandH);
+    // Overlay gradient (photo mode only)
+    if (!isTextCard) {
+      const op = state.overlayOpacity / 100;
+      if (state.position === 'top') {
+        const gh = Math.min(h, totalTextHeight + padding * 3);
+        const grad = ctx.createLinearGradient(0, 0, 0, gh);
+        grad.addColorStop(0, `rgba(0,0,0,${op})`);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, w, gh);
+      } else if (state.position === 'bottom') {
+        const gh = Math.min(h, totalTextHeight + padding * 3);
+        const start = h - gh;
+        const grad = ctx.createLinearGradient(0, start, 0, h);
+        grad.addColorStop(0, 'rgba(0,0,0,0)');
+        grad.addColorStop(1, `rgba(0,0,0,${op})`);
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, start, w, gh);
+      } else {
+        const bandTop = Math.max(0, (h - totalTextHeight) / 2 - padding);
+        const bandH = totalTextHeight + padding * 2;
+        ctx.fillStyle = `rgba(0,0,0,${op * 0.85})`;
+        ctx.fillRect(0, bandTop, w, bandH);
+      }
     }
 
-    // Text with soft shadow
-    ctx.shadowColor = 'rgba(0,0,0,0.85)';
-    ctx.shadowBlur = Math.round(fontSizePx * 0.45);
-    ctx.shadowOffsetY = Math.round(fontSizePx * 0.06);
+    // Text shadow for readability
+    ctx.shadowColor = 'rgba(0,0,0,0.45)';
+    ctx.shadowBlur = Math.round(fontSizePx * 0.35);
+    ctx.shadowOffsetY = Math.round(fontSizePx * 0.04);
     ctx.fillStyle = state.textColor;
 
     lines.forEach((line, i) => {
       ctx.fillText(line, w / 2, startY + i * lineHeight);
     });
 
-    // Reset shadow
     ctx.shadowColor = 'transparent';
     ctx.shadowBlur = 0;
     ctx.shadowOffsetY = 0;
+  }
 
-    // Subtle credit watermark (top-left)
-    const creditSize = Math.max(11, Math.round(w * 0.018));
+  // ---- Credit watermark ----
+  function drawCredit(w, h, x, y) {
+    const creditSize = Math.max(14, Math.round(w * 0.018));
     ctx.font = `700 ${creditSize}px "Inter", system-ui, sans-serif`;
     ctx.textAlign = 'left';
     ctx.textBaseline = 'top';
     ctx.fillStyle = 'rgba(255,255,255,0.72)';
-    ctx.shadowColor = 'rgba(0,0,0,0.9)';
+    ctx.shadowColor = 'rgba(0,0,0,0.7)';
     ctx.shadowBlur = 6;
-    ctx.fillText('@sumxn-official', padding * 0.55, padding * 0.55);
+    ctx.fillText('@sumxn-official', x, y);
     ctx.shadowColor = 'transparent';
     ctx.shadowBlur = 0;
   }
 
-  // ============================================================
-  //  CHARACTER COUNT
-  // ============================================================
-  function updateCharCount() {
-    const len = captionInput.value.length;
-    charCount.textContent = `${len}/220`;
-    charCount.classList.toggle('warn', len > 180 && len <= 220);
-    charCount.classList.toggle('over', len > 220);
+  // ---- Gradient helpers ----
+  function parseGradientAngle(str) {
+    const s = str.trim();
+    if (s.endsWith('deg')) return parseFloat(s) || 135;
+    const map = { 'to right': 90, 'to left': 270, 'to top': 0, 'to bottom': 180 };
+    for (const k in map) if (s.includes(k)) return map[k];
+    return 135;
+  }
+
+  function buildGradient(ctx, angleDeg, w, h, stops) {
+    const rad = (angleDeg - 90) * Math.PI / 180;
+    const cx = w / 2, cy = h / 2;
+    const len = Math.abs(w * Math.cos(rad)) + Math.abs(h * Math.sin(rad));
+    const x0 = cx - Math.cos(rad) * len / 2;
+    const y0 = cy - Math.sin(rad) * len / 2;
+    const x1 = cx + Math.cos(rad) * len / 2;
+    const y1 = cy + Math.sin(rad) * len / 2;
+    const grad = ctx.createLinearGradient(x0, y0, x1, y1);
+    stops.forEach((stop, i) => {
+      grad.addColorStop(i / Math.max(stops.length - 1, 1), stop);
+    });
+    return grad;
   }
 
   // ============================================================
-  //  EVENT LISTENERS
+  //  ACTION STATE
   // ============================================================
+  function updateActionState(disabled) {
+    $('downloadBtn').disabled = disabled;
+    $('copyBtn').disabled = disabled;
+  }
 
-  // Upload zone
-  uploadZone.addEventListener('click', (e) => {
-    if (e.target === thumbRemove || thumbRemove.contains(e.target)) return;
-    fileInput.click();
-  });
-
-  fileInput.addEventListener('change', (e) => {
-    if (e.target.files[0]) handleFile(e.target.files[0]);
-  });
-
-  thumbRemove.addEventListener('click', (e) => {
-    e.stopPropagation();
-    resetAll();
-  });
-
-  // Drag & drop
-  ['dragenter', 'dragover'].forEach(ev => {
-    uploadZone.addEventListener(ev, (e) => {
-      e.preventDefault();
-      uploadZone.classList.add('dragover');
-    });
-  });
-  ['dragleave', 'drop'].forEach(ev => {
-    uploadZone.addEventListener(ev, (e) => {
-      e.preventDefault();
-      uploadZone.classList.remove('dragover');
-    });
-  });
-  uploadZone.addEventListener('drop', (e) => {
-    const file = e.dataTransfer.files[0];
-    if (file) handleFile(file);
-  });
-
-  // Paste image
-  document.addEventListener('paste', (e) => {
-    const items = e.clipboardData?.items;
-    if (!items) return;
-    for (const item of items) {
-      if (item.type.startsWith('image/')) {
-        handleFile(item.getAsFile());
-        break;
-      }
+  // ============================================================
+  //  RESET / COPY / DOWNLOAD
+  // ============================================================
+  $('resetBtn').addEventListener('click', () => {
+    if (state.mode === 'text') {
+      $('captionText').value = '';
+      updateCharCount('charCountText', 'captionText');
+      state.bg = 'linear-gradient(135deg,#ff7a1a,#d9500a)';
+      document.querySelectorAll('.bg-swatch').forEach(s => {
+        s.classList.toggle('active', s.dataset.bg === state.bg);
+      });
+    } else {
+      $('captionPhoto').value = '';
+      updateCharCount('charCountPhoto', 'captionPhoto');
+      state.image = null;
+      uploadZone.classList.remove('has-image');
+      $('thumbImg').src = '';
+      fileInput.value = '';
     }
+    render();
+    toast('Reset', 'info');
   });
 
-  // Theme chips
-  document.querySelectorAll('#themeChips .chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('#themeChips .chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      state.theme = chip.dataset.theme;
-      state.autoDetected = false;
-
-      if (state.image) {
-        const caption = pickCaption(state.theme);
-        captionInput.value = caption;
-        updateCharCount();
-        renderPreview();
-      }
-    });
-  });
-
-  // Position chips
-  document.querySelectorAll('#posChips .chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      document.querySelectorAll('#posChips .chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      state.position = chip.dataset.pos;
-      renderPreview();
-    });
-  });
-
-  // Color swatches
-  document.querySelectorAll('.swatch').forEach(sw => {
-    sw.addEventListener('click', () => {
-      document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
-      sw.classList.add('active');
-      state.textColor = sw.dataset.color;
-      renderPreview();
-    });
-  });
-
-  // Font buttons
-  document.querySelectorAll('.font-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.font-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      state.font = btn.dataset.font;
-      renderPreview();
-    });
-  });
-
-  // Sliders
-  sizeSlider.addEventListener('input', (e) => {
-    state.sizePercent = +e.target.value;
-    sizeValue.textContent = e.target.value;
-    renderPreview();
-  });
-
-  overlaySlider.addEventListener('input', (e) => {
-    state.overlayOpacity = +e.target.value;
-    overlayValue.textContent = e.target.value;
-    renderPreview();
-  });
-
-  // Caption input
-  captionInput.addEventListener('input', () => {
-    updateCharCount();
-    renderPreview();
-  });
-
-  // Tool buttons
-  regenBtn.addEventListener('click', () => {
-    if (!state.image) return;
-    const caption = pickCaption(state.theme);
-    captionInput.value = caption;
-    updateCharCount();
-    renderPreview();
-    toast('New caption generated', 'info');
-  });
-
-  creditBtn.addEventListener('click', () => {
-    const val = captionInput.value.trim();
-    if (val.includes('@sumxn-official')) {
-      toast('Credit already added', 'info');
-      return;
-    }
-    captionInput.value = val ? val + '\n\n@sumxn-official' : '@sumxn-official';
-    updateCharCount();
-    renderPreview();
-    toast('Credit added', 'success');
-  });
-
-  clearBtn.addEventListener('click', () => {
-    captionInput.value = '';
-    updateCharCount();
-    renderPreview();
-  });
-
-  resetBtn.addEventListener('click', resetAll);
-
-  copyBtn.addEventListener('click', async () => {
-    const text = `${captionInput.value.trim()}\n\n@sumxn-official`;
-    if (!text.trim()) {
+  $('copyBtn').addEventListener('click', async () => {
+    const taId = state.mode === 'text' ? 'captionText' : 'captionPhoto';
+    const text = $(taId).value.trim();
+    if (!text) {
       toast('Nothing to copy', 'error');
       return;
     }
+    const full = `${text}\n\n@sumxn-official`;
     try {
-      await navigator.clipboard.writeText(text);
-      toast('Caption copied to clipboard', 'success');
+      await navigator.clipboard.writeText(full);
+      toast('Caption copied', 'success');
     } catch {
       const ta = document.createElement('textarea');
-      ta.value = text;
+      ta.value = full;
       ta.style.position = 'fixed';
       ta.style.opacity = '0';
       document.body.appendChild(ta);
@@ -1866,55 +1618,37 @@
     }
   });
 
-  downloadBtn.addEventListener('click', () => {
-    if (!state.image) return;
+  $('downloadBtn').addEventListener('click', () => {
     try {
       const ts = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
       const link = document.createElement('a');
-      link.download = `sumxn-${ts}.png`;
-      link.href = previewCanvas.toDataURL('image/png', 1.0);
+      link.download = `sumxn-${state.mode}-${ts}.png`;
+      link.href = canvas.toDataURL('image/png', 1.0);
       link.click();
-      toast('Image downloaded', 'success');
+      toast('Downloaded', 'success');
     } catch (e) {
       toast('Download failed', 'error');
     }
   });
 
-  proBtn.addEventListener('click', () => {
-    toast('Pro version coming soon — stay tuned!', 'info');
-  });
-
-  // Keyboard shortcuts
-  document.addEventListener('keydown', (e) => {
-    if (e.target.matches('input, textarea, [contenteditable]')) return;
-    if (!state.image) return;
-
-    if (e.key === 'r' || e.key === 'R') {
-      e.preventDefault();
-      regenBtn.click();
-    } else if (e.key === 'd' || e.key === 'D') {
-      if (!e.ctrlKey && !e.metaKey) {
-        e.preventDefault();
-        downloadBtn.click();
-      }
-    } else if (e.key === 'c' || e.key === 'C') {
-      if (!e.ctrlKey && !e.metaKey) {
-        e.preventDefault();
-        copyBtn.click();
-      }
-    }
+  $('proBtn').addEventListener('click', () => {
+    toast('Pro version coming soon', 'info');
   });
 
   // ============================================================
   //  INIT
   // ============================================================
-  updateCharCount();
+  // Text card mode is default; generate an initial caption
+  $('captionText').value = pickCaption('village');
+  updateCharCount('charCountText', 'captionText');
+  updateCharCount('charCountPhoto', 'captionPhoto');
 
-  // Clean startup toast (only once)
-  setTimeout(() => {
-    toast('Drop an image — caption appears automatically', 'info');
-  }, 600);
+  // Position chips hidden in text mode
+  $('posGroup').style.display = 'none';
+  $('overlayGroup').style.display = 'none';
+  state.position = 'center';
 
+  render();
 })();
 </script>
 </body>
