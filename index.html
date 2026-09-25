@@ -1007,7 +1007,16 @@
       "I am a village boy with a city-sized hunger.",
       "My roots are in Nepal. My hustle is global.",
       "I walked away from home with one bag and a thousand reasons.",
-      "The village gave me my heart. This journey is giving me my story."
+      "The village gave me my heart. This journey is giving me my story.",
+      "The road out of my village was quiet, but the dream inside me was loud.",
+      "I carry my village in my voice, even when I speak to the whole world.",
+      "Small beginnings are still beginnings. Mine started beneath Nepal's hills.",
+      "I did not leave my roots behind; I gave them a wider horizon.",
+      "The same hands that helped at home are now building a life far away.",
+      "Home taught me enough courage to take the first unfamiliar step.",
+      "My village is my starting point, never the limit of my story.",
+      "I am far from home, but every hard day brings me closer to its pride.",
+      "The mountains made me patient; the journey is making me brave."
     ],
     study: [
       "I left home to study — not just books, but life itself.",
@@ -1019,7 +1028,16 @@
       "I'm not just studying for a degree — I'm studying for a way up.",
       "First time living alone. First time being truly responsible for me.",
       "I study by day, dream by night, and build in between.",
-      "This degree is not just mine. It belongs to everyone who believed in me."
+      "This degree is not just mine. It belongs to everyone who believed in me.",
+      "A new country became my classroom, and uncertainty became my first lesson.",
+      "I am earning more than credits here; I am learning how to trust myself.",
+      "Every assignment is a small investment in the life I came here to build.",
+      "Being far from home makes ordinary wins feel extraordinary.",
+      "I crossed an ocean for an education and found a stronger version of me.",
+      "The syllabus changes every semester. So do I.",
+      "I may feel lost sometimes, but I am never standing still.",
+      "My parents gave me a chance; I am turning it into a future.",
+      "The hardest subject this year is becoming comfortable with growth."
     ],
     hustle: [
       "I started posting reels not for fame, but because I need to earn in USD.",
@@ -1031,7 +1049,16 @@
       "One reel at a time, I'm building a bridge to the world.",
       "I don't need luck. I need consistency and one viral moment.",
       "I'm learning marketing, editing, and life — from one phone screen.",
-      "They said get a real job. I'm building one — just differently."
+      "They said get a real job. I'm building one — just differently.",
+      "No perfect setup, no perfect timing; I press record and start anyway.",
+      "The numbers move slowly, but my skills are growing every day.",
+      "I am turning spare minutes into work my future can recognize.",
+      "One good idea can change a month. One disciplined habit can change a life.",
+      "I create from where I am with what I have and learn as I go.",
+      "The goal is bigger than views: I am building proof that I can do this.",
+      "My first audience is small, but my commitment is not.",
+      "I stopped waiting for permission and started publishing the process.",
+      "Every post is practice for the opportunities I have not met yet."
     ],
     today: [
       "I'm not waiting for the perfect day. I'm living this one.",
@@ -1043,7 +1070,16 @@
       "I'm learning to be proud of small progress.",
       "Today I'm not comparing. I'm creating.",
       "I'm exactly where I need to be — even if it doesn't look like it yet.",
-      "Living today, not someday. Building now, not later."
+      "Living today, not someday. Building now, not later.",
+      "I gave this day my attention instead of giving it to my worries.",
+      "There is still something beautiful about beginning again this morning.",
+      "I do not need a perfect plan to make an honest move today.",
+      "Small choices made today are quietly designing my next chapter.",
+      "I am allowed to enjoy the life I am still working to improve.",
+      "Today feels ordinary, and that is its own kind of gift.",
+      "I traded pressure for presence and found room to breathe.",
+      "The future can wait a little; this moment deserves me too.",
+      "I showed up with what I had, and today that was enough."
     ],
     memories: [
       "One day these hard days will be the memories I'm most proud of.",
@@ -1055,7 +1091,16 @@
       "I want to look back and say: I really lived those years.",
       "I'm turning my struggle into stories worth remembering.",
       "This chapter is hard, but it's mine.",
-      "Someday I'll scroll back and smile at how far I've come."
+      "Someday I'll scroll back and smile at how far I've come.",
+      "The best memories are often hiding inside days I almost gave up on.",
+      "I am saving proof of the little life I worked so hard to create.",
+      "Years from now, I will remember the courage behind these simple moments.",
+      "Some places become special because of who I was when I stood there.",
+      "I want my memories to include the attempts, not only the victories.",
+      "A quiet day can still become a treasured page in my story.",
+      "I am living the moments my future self will wish to revisit.",
+      "The camera catches the scene; my heart keeps the meaning.",
+      "Not every memory needs a crowd. Some are made while choosing to continue."
     ],
     life: [
       "I am learning to breathe slower.",
@@ -1068,7 +1113,16 @@
       "I'm a work in progress, and I'm okay with that.",
       "This is not a phase. This is my life's biggest chapter.",
       "I came from nothing, but I'm building something — reel by reel.",
-      "My journey is proof that where you start doesn't decide where you finish."
+      "My journey is proof that where you start doesn't decide where you finish.",
+      "I am becoming someone my younger self would feel safe believing in.",
+      "Growth rarely announces itself; sometimes it looks like trying once more.",
+      "I have changed my direction without abandoning my destination.",
+      "The life I want is asking for patience, courage, and another morning.",
+      "I am not behind. I am gathering the strength for my own pace.",
+      "Every version of me had a reason to exist, including this one.",
+      "I am building a future that feels honest, not just impressive.",
+      "The next chapter will carry scars from this one and still be beautiful.",
+      "I do not need to see the whole road to take the next true step."
     ]
   };
 
@@ -1088,7 +1142,8 @@
     font: 'playfair',
     sizePercent: 34,
     overlayOpacity: 45,
-    lastCaption: ''
+    lastCaption: '',
+    usedCaptions: new Set()
   };
 
   // ============================================================
@@ -1149,11 +1204,16 @@
   function pickCaption(theme) {
     const pool = CAPTIONS[theme] || CAPTIONS.village;
     if (pool.length === 1) return pool[0];
-    let choice, tries = 0;
-    do {
-      choice = pool[Math.floor(Math.random() * pool.length)];
-      tries++;
-    } while (choice === state.lastCaption && tries < 10);
+    let available = pool.filter(caption => !state.usedCaptions.has(caption));
+    if (!available.length) {
+      pool.forEach(caption => state.usedCaptions.delete(caption));
+      available = pool.slice();
+    }
+    if (available.length > 1) {
+      available = available.filter(caption => caption !== state.lastCaption);
+    }
+    const choice = available[Math.floor(Math.random() * available.length)];
+    state.usedCaptions.add(choice);
     state.lastCaption = choice;
     return choice;
   }
