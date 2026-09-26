@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Studio — Photo captions</title>
+<title>My Studio — from Sumxn Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
@@ -110,6 +110,19 @@
   .credit-dialog-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 18px; }
   .credit-dialog-actions button { padding: 9px 13px; border: 1px solid var(--stroke-2); border-radius: 8px; background: #1c1c1c; color: var(--text); cursor: pointer; }
   .credit-dialog-actions button[type="submit"] { background: #eee; color: #111; border-color: #eee; font-weight: 700; }
+  .header-right .credit-pill { cursor: pointer; font-family: inherit; border: 1px solid var(--stroke-2); background: #222; }
+  .header-right .credit-pill:hover { background: #303030; }
+  .app { max-width: 1380px; }
+  .bg-swatch.active { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.2); }
+  .bg-swatch.active::after { background: rgba(0,0,0,.22); }
+  .chip.active { background: rgba(255,255,255,.1); border-color: #aaa; color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.05); }
+  .step-num { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.24); color: #eee; }
+  .mode-btn.active, .btn-primary { background: linear-gradient(135deg,#f0f0f0,#a5a5a5); color: #111; box-shadow: 0 4px 12px rgba(255,255,255,.12); }
+  .style-preset.active { border-color: #bbb; background: rgba(255,255,255,.06); }
+  .style-preset.active .sp-name { color: #fff; }
+  .slider { accent-color: #ddd; }
+  .upload-zone.dragover { border-color: #ddd; background: rgba(255,255,255,.04); }
+  .toast-icon.success, .toast-icon.info { background: rgba(255,255,255,.1); color: #eee; }
 
   .credit-pill {
     font-size: 11px; font-weight: 700; color: #fff;
@@ -1029,6 +1042,34 @@
     </div>
   </form>
 </dialog>
+<script>
+(() => {
+  const dialog = document.getElementById('credit-dialog');
+  const form = document.getElementById('credit-form');
+  const input = document.getElementById('credit-input');
+  const creditButton = document.getElementById('credit-settings-button');
+  const storageKey = 'my-studio-credit';
+  function getCredit() {
+    try { return localStorage.getItem(storageKey) ?? '@sumxn-official'; }
+    catch (error) { console.warn('Could not read saved studio credit.', error); return '@sumxn-official'; }
+  }
+  function updateButton() { creditButton.textContent = getCredit() || 'Set your @credit'; }
+  creditButton.addEventListener('click', () => { input.value = getCredit(); dialog.showModal(); input.focus(); });
+  document.getElementById('credit-cancel-button').addEventListener('click', () => dialog.close());
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const value = input.value.trim();
+    const credit = value && !value.startsWith('@') ? `@${value}` : value;
+    try { localStorage.setItem(storageKey, credit); }
+    catch (error) { console.error('Could not save studio credit.', error); alert('Your browser could not save this handle. Check your storage settings and try again.'); return; }
+    updateButton();
+    window.dispatchEvent(new Event('studio-credit-change'));
+    dialog.close();
+  });
+  updateButton();
+  window.getStudioCredit = getCredit;
+})();
+</script>
 <div class="toast-stack" id="toastStack"></div>
 
 <script>
@@ -1328,11 +1369,16 @@
     });
     $(creditId).addEventListener('click', () => {
       const val = ta.value.trim();
-      if (val.includes('@sumxn-official')) {
+      const credit = window.getStudioCredit();
+      if (!credit) {
+        toast('Set a @credit first to add one', 'info');
+        return;
+      }
+      if (val.includes(credit)) {
         toast('Credit already added', 'info');
         return;
       }
-      ta.value = val ? val + '\n\n@sumxn-official' : '@sumxn-official';
+      ta.value = val ? val + '\n\n' + credit : credit;
       updateCharCount(countId, taId);
       render();
       toast('Credit added', 'success');
@@ -1489,6 +1535,8 @@
       renderPhotoCaption(text);
     }
   }
+
+  window.addEventListener('studio-credit-change', render);
 
   // ---- TEXT CARD MODE ----
   function renderTextCard(text) {
@@ -1942,6 +1990,8 @@
   //  CREDIT
   // ============================================================
   function drawCredit(w, h, x, y) {
+    const credit = window.getStudioCredit();
+    if (!credit) return;
     const creditSize = Math.max(14, Math.round(w * 0.018));
     ctx.font = `700 ${creditSize}px "Inter", system-ui, sans-serif`;
     ctx.textAlign = 'left';
@@ -1949,7 +1999,7 @@
     ctx.fillStyle = 'rgba(255,255,255,0.72)';
     ctx.shadowColor = 'rgba(0,0,0,0.7)';
     ctx.shadowBlur = 6;
-    ctx.fillText('@sumxn-official', x, y);
+    ctx.fillText(credit, x, y);
     ctx.shadowColor = 'transparent';
     ctx.shadowBlur = 0;
   }
@@ -1996,7 +2046,8 @@
       toast('Nothing to copy', 'error');
       return;
     }
-    const full = `${text}\n\n@sumxn-official`;
+    const credit = window.getStudioCredit();
+    const full = credit ? `${text}\n\n${credit}` : text;
     try {
       await navigator.clipboard.writeText(full);
       toast('Caption copied', 'success');

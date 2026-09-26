@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050505">
+    <meta name="description" content="Choose a mood and describe your photo or video to make a caption and description that feel like you.">
+    <title>Vibe to words — My Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/studio.css">
+    <link rel="stylesheet" href="assets/css/vibe.css">
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="index.html" aria-label="My Studio home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-name">My Studio <span>from Sumxn Studio</span></span>
+        </a>
+        <nav class="tool-nav" aria-label="Studio navigation">
+          <a href="index.html">Home</a><a href="photo-caption.html">Photo captions</a><a href="speaking.html">English practice</a>
+        </nav>
+        <button id="credit-settings-button" class="credit-button" type="button">Set your @credit</button>
+      </header>
+
+      <main class="vibe-main">
+        <div class="vibe-heading">
+          <p class="eyebrow"><span></span> A LITTLE HELP FINDING THE WORDS</p>
+          <h1>Give it a <em>feeling.</em></h1>
+          <p>Choose the mood, tell us what’s happening, and make a caption that sounds like you.</p>
+        </div>
+
+        <div class="vibe-layout">
+          <section class="vibe-form-card" aria-labelledby="vibe-form-title">
+            <div class="form-card-head"><span class="step-number">01</span><div><p class="eyebrow">START WITH THE MOMENT</p><h2 id="vibe-form-title">What are you sharing?</h2></div></div>
+
+            <label class="field-label" for="media-file">ADD A PHOTO OR VIDEO <span>OPTIONAL</span></label>
+            <label id="upload-area" class="upload-area" for="media-file">
+              <input id="media-file" type="file" accept="image/*,video/*">
+              <span id="upload-prompt" class="upload-prompt">
+                <span class="upload-symbol" aria-hidden="true">＋</span>
+                <span><strong>Choose a file</strong><small>Photo or video · stays on your device</small></span>
+              </span>
+              <img id="image-preview" class="media-preview" alt="Selected media preview" hidden>
+              <video id="video-preview" class="media-preview" controls playsinline hidden></video>
+              <span id="remove-media" class="remove-media" hidden>Remove file</span>
+            </label>
+            <p class="privacy-note">Your file is only previewed in this browser; it is not uploaded or automatically analyzed.</p>
+
+            <label class="field-label" for="moment-input">WHAT’S HAPPENING?</label>
+            <textarea id="moment-input" class="moment-input" maxlength="240" placeholder="A late-night drive with the windows down, city lights all around..." rows="3"></textarea>
+            <div class="field-meta"><span>Give a few details you want your words to include.</span><span id="character-count">0 / 240</span></div>
+
+            <fieldset class="vibe-fieldset">
+              <legend class="field-label">CHOOSE YOUR VIBE</legend>
+              <div id="vibe-options" class="vibe-options"></div>
+            </fieldset>
+            <button id="generate-button" class="generate-button" type="button"><span aria-hidden="true">✳</span> Find my words <span aria-hidden="true">→</span></button>
+          </section>
+
+          <section class="results-column" aria-label="Your generated writing">
+            <div class="result-card">
+              <div class="result-heading"><div><p class="eyebrow">A SHORT LINE TO SHARE</p><h2>Your caption</h2></div><button class="copy-button" data-copy="caption-output" type="button">Copy</button></div>
+              <textarea id="caption-output" class="result-output caption-output" rows="4" aria-label="Generated caption" placeholder="Your caption will appear here."></textarea>
+              <p class="result-hint">Edit it until it feels right.</p>
+            </div>
+            <div class="result-card description-card">
+              <div class="result-heading"><div><p class="eyebrow">A LITTLE MORE CONTEXT</p><h2>Your description</h2></div><button class="copy-button" data-copy="description-output" type="button">Copy</button></div>
+              <textarea id="description-output" class="result-output" rows="6" aria-label="Generated description" placeholder="A longer description will appear here."></textarea>
+              <p class="result-hint">A starting point for a post, reel, or story.</p>
+            </div>
+            <p id="vibe-status" class="status-message" role="status" aria-live="polite"></p>
+          </section>
+        </div>
+      </main>
+      <footer class="footer"><a class="footer-brand" href="index.html">MY STUDIO</a><span>YOUR VIBE. YOUR WORDS.</span><a href="speaking.html">ENGLISH PRACTICE ↗</a></footer>
+    </div>
+
+    <dialog id="credit-dialog" class="credit-dialog">
+      <form id="credit-form" method="dialog">
+        <button class="dialog-close" type="button" aria-label="Close">×</button>
+        <p class="eyebrow">MAKE IT YOURS</p><h2>Set your @credit</h2>
+        <p class="dialog-copy">Your handle can appear on exported images and captions. Leave it blank for no credit.</p>
+        <label for="credit-input">YOUR HANDLE</label><input id="credit-input" maxlength="40" placeholder="@yourname" autocomplete="off">
+        <div class="dialog-actions"><button type="button" class="button-secondary" id="credit-cancel">Cancel</button><button type="submit" class="button-primary">Save handle</button></div>
+      </form>
+    </dialog>
+    <script src="assets/js/studio.js" defer></script>
+    <script src="assets/js/vibes.js" defer></script>
+    <script src="assets/js/vibe-studio.js" defer></script>
+  </body>
+</html>
