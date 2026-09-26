@@ -890,16 +890,17 @@
       <div class="step">
         <div class="step-head">
           <div class="step-num">1</div>
-          <div class="step-title">Upload Image</div>
+          <div class="step-title">Upload Photo or Video</div>
         </div>
         <div class="upload-zone" id="uploadZone">
           <div class="upload-default">
             <span class="upload-icon">⬆</span>
             <div class="upload-title">Drop image or click to browse</div>
-            <div class="upload-sub">JPG · PNG · WEBP · max 15MB</div>
+            <div class="upload-sub">JPG · PNG · WEBP · MP4 · WEBM</div>
           </div>
           <div class="upload-thumb">
             <img id="thumbImg" class="thumb-img" alt="">
+            <video id="thumbVideo" class="thumb-img" controls playsinline hidden aria-label="Video preview"></video>
             <div class="thumb-info">
               <div class="thumb-name" id="thumbName">image.jpg</div>
               <div class="thumb-meta" id="thumbMeta">Ready</div>
@@ -907,7 +908,7 @@
             <button class="thumb-remove" id="thumbRemove" title="Remove">✕</button>
           </div>
         </div>
-        <input type="file" id="fileInput" accept="image/*">
+        <input type="file" id="fileInput" accept="image/*,video/*">
       </div>
 
       <div class="step">
@@ -1008,6 +1009,8 @@
       <div class="main-actions">
         <button class="btn btn-ghost" id="resetBtn">↺ Reset</button>
         <button class="btn" id="copyBtn">📋 Copy Caption</button>
+        <button class="btn" id="downloadVideoBtn" disabled>⬇ Download Video</button>
+        <button class="btn" id="stopVideoBtn" type="button" hidden>Stop recording</button>
         <button class="btn btn-primary" id="downloadBtn">⬇ Download PNG</button>
       </div>
     </div>
@@ -1218,6 +1221,7 @@
     bg: 'linear-gradient(135deg,#ff7a1a,#d9500a)',
     captionStyle: 'horizontal',
     image: null,
+    video: null,
     imageName: '',
     imageSize: 0,
     theme: 'village',
@@ -1229,6 +1233,8 @@
     lastCaption: '',
     usedCaptions: new Set()
   };
+  let activeVideoRecorder = null;
+  let recordingFrame = 0;
 
   // ============================================================
   //  DOM
@@ -1441,9 +1447,13 @@
   // ============================================================
   const uploadZone = $('uploadZone');
   const fileInput = $('fileInput');
+  const thumbVideo = $('thumbVideo');
+  let videoObjectUrl = null;
+  let videoPreviewFrame = 0;
 
   uploadZone.addEventListener('click', (e) => {
     if (e.target.closest('.thumb-remove')) return;
+    if (e.target.closest('.upload-thumb')) return;
     fileInput.click();
   });
 
@@ -1453,12 +1463,9 @@
 
   $('thumbRemove').addEventListener('click', (e) => {
     e.stopPropagation();
-    state.image = null;
-    uploadZone.classList.remove('has-image');
-    $('thumbImg').src = '';
-    fileInput.value = '';
+    clearUploadedMedia();
     render();
-    toast('Image removed', 'info');
+    toast('Media removed', 'info');
   });
 
   ['dragenter', 'dragover'].forEach(ev => {
@@ -1490,29 +1497,107 @@
     }
   });
 
+  function clearUploadedMedia() {
+    if (videoPreviewFrame) cancelAnimationFrame(videoPreviewFrame);
+    videoPreviewFrame = 0;
+    state.image = null;
+    state.video = null;
+    if (videoObjectUrl) URL.revokeObjectURL(videoObjectUrl);
+    videoObjectUrl = null;
+    thumbVideo.onloadedmetadata = null;
+    thumbVideo.onerror = null;
+    thumbVideo.onplay = null;
+    thumbVideo.onpause = null;
+    thumbVideo.onseeked = null;
+    thumbVideo.onended = null;
+    thumbVideo.pause();
+    thumbVideo.removeAttribute('src');
+    thumbVideo.load();
+    thumbVideo.hidden = true;
+    $('thumbImg').removeAttribute('src');
+    $('thumbImg').hidden = true;
+    $('thumbName').textContent = '';
+    $('thumbMeta').textContent = '';
+    uploadZone.classList.remove('has-image');
+    fileInput.value = '';
+  }
+
+  function keepVideoPreviewInSync() {
+    if (!state.video || state.video.paused || state.video.ended) {
+      videoPreviewFrame = 0;
+      return;
+    }
+    render();
+    videoPreviewFrame = requestAnimationFrame(keepVideoPreviewInSync);
+  }
+
   function handleFile(file) {
-    if (!file || !file.type.startsWith('image/')) {
-      toast('Please upload an image', 'error');
+    if (!file || (!file.type.startsWith('image/') && !file.type.startsWith('video/'))) {
+      toast('Choose a supported image or video', 'error');
+      fileInput.value = '';
       return;
     }
-    if (file.size > 15 * 1024 * 1024) {
-      toast('Image too large (max 15MB)', 'error');
+    const isVideo = file.type.startsWith('video/');
+    const maxSize = isVideo ? 200 * 1024 * 1024 : 15 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast(isVideo ? 'Video too large (max 200MB)' : 'Image too large (max 15MB)', 'error');
+      fileInput.value = '';
       return;
     }
+
+    clearUploadedMedia();
+    uploadZone.classList.add('has-image');
+    $('thumbName').textContent = file.name;
+    $('thumbMeta').textContent = `Loading · ${formatBytes(file.size)}`;
+
+    if (isVideo) {
+      videoObjectUrl = URL.createObjectURL(file);
+      state.video = thumbVideo;
+      thumbVideo.hidden = false;
+      thumbVideo.src = videoObjectUrl;
+      thumbVideo.onloadedmetadata = () => {
+        $('thumbMeta').textContent = `Video · ${formatBytes(file.size)}`;
+        render();
+        toast('Video loaded. Preview the caption or download the subtitled video.', 'success');
+      };
+      thumbVideo.onerror = () => {
+        clearUploadedMedia();
+        render();
+        toast('Could not play this video format in your browser', 'error');
+      };
+      thumbVideo.onplay = keepVideoPreviewInSync;
+      thumbVideo.onpause = () => {
+        if (videoPreviewFrame) cancelAnimationFrame(videoPreviewFrame);
+        videoPreviewFrame = 0;
+        render();
+      };
+      thumbVideo.onseeked = render;
+      thumbVideo.onended = render;
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
         state.image = img;
-        uploadZone.classList.add('has-image');
         $('thumbImg').src = img.src;
-        $('thumbName').textContent = file.name;
-        $('thumbMeta').textContent = `Ready · ${formatBytes(file.size)}`;
+        $('thumbImg').hidden = false;
+        $('thumbMeta').textContent = `Photo · ${formatBytes(file.size)}`;
         render();
-        toast('Image loaded', 'success');
+        toast('Photo loaded', 'success');
       };
-      img.onerror = () => toast('Could not read image', 'error');
+      img.onerror = () => {
+        clearUploadedMedia();
+        render();
+        toast('Could not read this image', 'error');
+      };
       img.src = e.target.result;
+    };
+    reader.onerror = () => {
+      clearUploadedMedia();
+      render();
+      toast('Could not read this image', 'error');
     };
     reader.readAsDataURL(file);
   }
@@ -1572,7 +1657,8 @@
 
   // ---- PHOTO CAPTION MODE ----
   function renderPhotoCaption(text) {
-    if (!state.image) {
+    const media = state.video || state.image;
+    if (!media || (state.video && state.video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA)) {
       canvas.width = 1080;
       canvas.height = 1080;
       ctx.fillStyle = '#0a0a0a';
@@ -1581,21 +1667,25 @@
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillStyle = 'rgba(255,255,255,0.35)';
-      ctx.fillText('Upload an image to begin', 540, 540);
+      ctx.fillText('Upload a photo or video to begin', 540, 540);
       updateActionState(true);
       return;
     }
 
-    const img = state.image;
+    const img = media;
     const MAX = 1400;
-    let w = img.naturalWidth;
-    let h = img.naturalHeight;
+    let w = state.video ? img.videoWidth : img.naturalWidth;
+    let h = state.video ? img.videoHeight : img.naturalHeight;
+    if (!w || !h) {
+      updateActionState(true);
+      return;
+    }
     const scale = Math.min(1, MAX / w, MAX / h);
     w = Math.round(w * scale);
     h = Math.round(h * scale);
 
-    canvas.width = w;
-    canvas.height = h;
+    if (canvas.width !== w) canvas.width = w;
+    if (canvas.height !== h) canvas.height = h;
     ctx.clearRect(0, 0, w, h);
     ctx.drawImage(img, 0, 0, w, h);
 
@@ -2011,11 +2101,112 @@
   function updateActionState(disabled) {
     $('downloadBtn').disabled = disabled;
     $('copyBtn').disabled = disabled;
+    $('downloadVideoBtn').disabled = disabled || !state.video || Boolean(activeVideoRecorder);
   }
 
   // ============================================================
   //  RESET / COPY / DOWNLOAD
   // ============================================================
+  $('downloadVideoBtn').addEventListener('click', downloadCaptionedVideo);
+  $('stopVideoBtn').addEventListener('click', () => {
+    if (activeVideoRecorder && activeVideoRecorder.state !== 'inactive') activeVideoRecorder.stop();
+  });
+
+  async function downloadCaptionedVideo() {
+    const video = state.video;
+    const captureVideo = video && (video.captureStream || video.webkitCaptureStream);
+    if (!video || !canvas.captureStream || !window.MediaRecorder || !captureVideo) {
+      toast('Captioned video export is not supported by this browser', 'error');
+      return;
+    }
+
+    let canvasStream;
+    let sourceStream;
+    try {
+      video.pause();
+      if (video.currentTime > 0) {
+        await new Promise((resolve, reject) => {
+          video.addEventListener('seeked', resolve, { once: true });
+          video.addEventListener('error', reject, { once: true });
+          video.currentTime = 0;
+        });
+      }
+      render();
+      canvasStream = canvas.captureStream(30);
+      sourceStream = captureVideo.call(video);
+      const tracks = [...canvasStream.getVideoTracks(), ...sourceStream.getAudioTracks()];
+      if (sourceStream.getAudioTracks().length === 0) {
+        toast('This video has no capturable audio track; the export will be silent', 'info');
+      }
+      const stream = new MediaStream(tracks);
+      const mimeType = ['video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm']
+        .find(type => MediaRecorder.isTypeSupported(type));
+      activeVideoRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+      const recorder = activeVideoRecorder;
+      const chunks = [];
+      const stopAtEnd = () => {
+        if (recorder.state !== 'inactive') recorder.stop();
+      };
+
+      recorder.addEventListener('dataavailable', event => {
+        if (event.data.size > 0) chunks.push(event.data);
+      });
+      recorder.addEventListener('error', () => {
+        toast('Video recording failed. Try a smaller video or a supported format.', 'error');
+        if (recorder.state !== 'inactive') recorder.stop();
+      });
+      recorder.addEventListener('stop', () => {
+        video.removeEventListener('ended', stopAtEnd);
+        if (recordingFrame) cancelAnimationFrame(recordingFrame);
+        recordingFrame = 0;
+        [...canvasStream.getTracks(), ...sourceStream.getTracks()].forEach(track => track.stop());
+        activeVideoRecorder = null;
+        $('downloadVideoBtn').textContent = '⬇ Download Video';
+        $('stopVideoBtn').hidden = true;
+        $('downloadVideoBtn').disabled = !state.video;
+        if (chunks.length) {
+          const blob = new Blob(chunks, { type: recorder.mimeType || 'video/webm' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          const baseName = $('thumbName').textContent.replace(/\.[^.]+$/, '') || 'captioned-video';
+          link.download = `${baseName}-captioned.webm`;
+          link.href = url;
+          link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+          toast('Captioned video downloaded', 'success');
+        }
+        video.pause();
+        if (video.readyState >= HTMLMediaElement.HAVE_METADATA) video.currentTime = 0;
+        render();
+      }, { once: true });
+
+      video.addEventListener('ended', stopAtEnd, { once: true });
+      recorder.start(1000);
+      $('downloadVideoBtn').textContent = 'Recording…';
+      $('downloadVideoBtn').disabled = true;
+      $('stopVideoBtn').hidden = false;
+      const renderRecordingFrame = () => {
+        if (!activeVideoRecorder || activeVideoRecorder.state !== 'recording') return;
+        render();
+        recordingFrame = requestAnimationFrame(renderRecordingFrame);
+      };
+      renderRecordingFrame();
+      await video.play();
+    } catch (error) {
+      if (activeVideoRecorder && activeVideoRecorder.state !== 'inactive') activeVideoRecorder.stop();
+      else {
+        canvasStream?.getTracks().forEach(track => track.stop());
+        sourceStream?.getTracks().forEach(track => track.stop());
+        activeVideoRecorder = null;
+        $('downloadVideoBtn').textContent = '⬇ Download Video';
+        $('downloadVideoBtn').disabled = !state.video;
+        $('stopVideoBtn').hidden = true;
+      }
+      console.error('Could not export captioned video.', error);
+      toast('Could not start video export. Check that your video can play in this browser.', 'error');
+    }
+  }
+
   $('resetBtn').addEventListener('click', () => {
     if (state.mode === 'text') {
       $('captionText').value = '';
@@ -2032,8 +2223,18 @@
       $('captionPhoto').value = '';
       updateCharCount('charCountPhoto', 'captionPhoto');
       state.image = null;
+      state.video = null;
       uploadZone.classList.remove('has-image');
       $('thumbImg').src = '';
+      thumbVideo.pause();
+      thumbVideo.removeAttribute('src');
+      thumbVideo.load();
+      thumbVideo.hidden = true;
+      $('thumbImg').hidden = true;
+      $('thumbName').textContent = '';
+      $('thumbMeta').textContent = '';
+      if (videoObjectUrl) URL.revokeObjectURL(videoObjectUrl);
+      videoObjectUrl = null;
       fileInput.value = '';
     }
     render();
