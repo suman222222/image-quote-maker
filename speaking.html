@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f7f2">
+    <meta name="description" content="Build a daily English speaking habit with thoughtful topics and a gentle reading pace.">
+    <title>Say it slowly — Speaking practice</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <script src="assets/js/topics.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Say it slowly home">
+          <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span class="brand-name">say it <span>slowly</span></span>
+        </a>
+        <div class="topbar-note"><span class="status-dot"></span> A little English, every day</div>
+        <a class="topbar-link" href="index.html">Caption maker <span aria-hidden="true">↗</span></a>
+      </header>
+
+      <main class="layout">
+        <aside class="topic-panel" aria-label="Choose a speaking topic">
+          <div class="panel-intro">
+            <p class="eyebrow">YOUR DAILY PRACTICE</p>
+            <h1>Find your<br>next <em>conversation.</em></h1>
+            <p class="intro-copy">Pick a topic, take a breath, and let the words come naturally.</p>
+          </div>
+
+          <label class="search-box">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <span class="visually-hidden">Search topics</span>
+            <input id="topic-search" type="search" placeholder="Find a topic..." autocomplete="off">
+            <kbd>/</kbd>
+          </label>
+
+          <div class="topic-heading">
+            <span>TOPICS</span>
+            <span id="topic-count" class="topic-count"></span>
+          </div>
+          <div id="category-filters" class="category-filters" aria-label="Filter topics"></div>
+          <div id="topic-list" class="topic-list" aria-live="polite"></div>
+
+          <div class="side-note">
+            <span class="note-icon" aria-hidden="true">✳</span>
+            <p><strong>No need to be perfect.</strong><br>Speak at your own pace. Every sentence is progress.</p>
+          </div>
+        </aside>
+
+        <section id="practice" class="practice-area" aria-label="Speaking practice">
+          <div class="welcome-row">
+            <div>
+              <p class="eyebrow">A QUIET MOMENT FOR YOU</p>
+              <h2>Make space to <em>speak.</em></h2>
+            </div>
+            <div class="practice-count"><span class="count-icon" aria-hidden="true">✦</span><span><strong id="completed-count">0</strong> topics completed</span></div>
+          </div>
+
+          <article class="reader-card">
+            <div class="reader-top">
+              <div class="topic-meta">
+                <span id="reader-category" class="topic-label">EVERYDAY LIFE</span>
+                <span class="meta-divider" aria-hidden="true">/</span>
+                <span id="reader-level">Beginner</span>
+                <span class="meta-divider" aria-hidden="true">/</span>
+                <span id="reader-duration">2 min</span>
+              </div>
+              <button id="text-size-button" class="icon-button" type="button" aria-label="Increase reading text size" title="Increase text size">A<span>+</span></button>
+            </div>
+
+            <div class="reader-title-row">
+              <div>
+                <p class="reader-kicker">TODAY'S SPEAKING PROMPT</p>
+                <h3 id="reader-title">A small thing that made me smile</h3>
+              </div>
+              <span id="reader-number" class="reader-number" aria-hidden="true">01</span>
+            </div>
+
+            <div class="reading-window" id="reading-window" tabindex="0" aria-label="Reading passage. Start speaking and follow the text as it scrolls.">
+              <div id="reading-copy" class="reading-copy"></div>
+              <div id="end-of-reading" class="end-of-reading" hidden>
+                <span aria-hidden="true">✳</span>
+                <p>Lovely work. You made it to the end.</p>
+              </div>
+            </div>
+
+            <div class="reader-footer">
+              <div class="progress-info"><span>PASSAGE PROGRESS</span><span id="progress-value">0%</span></div>
+              <div class="progress-track" role="progressbar" aria-label="Passage progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-fill"></span></div>
+              <div class="reader-controls">
+                <div class="pace-control">
+                  <span class="pace-icon" aria-hidden="true">〰</span>
+                  <label for="pace-slider">Reading pace</label>
+                  <input id="pace-slider" type="range" min="10" max="48" value="20" step="2">
+                  <span id="pace-label" class="pace-label">Slow</span>
+                </div>
+                <div class="action-buttons">
+                  <button id="restart-button" class="button button-quiet" type="button" aria-label="Start passage again" title="Start again">↺</button>
+                  <button id="play-button" class="button button-primary" type="button"><span id="play-icon" aria-hidden="true">▶</span><span id="play-label">Start speaking</span></button>
+                  <button id="next-button" class="button button-next" type="button">Next topic <span aria-hidden="true">→</span></button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <div class="practice-tip">
+            <span class="tip-spark" aria-hidden="true">✳</span>
+            <p><strong>Try this:</strong> Read out loud, pause at commas, and say the sentence again in your own words.</p>
+            <span class="tip-shortcut">SPACE <span>to play / pause</span></span>
+          </div>
+          <p id="app-status" class="visually-hidden" role="status" aria-live="polite"></p>
+        </section>
+      </main>
+      <footer class="site-footer"><span>Made for the words you haven't said yet.</span><span>Take your time <span aria-hidden="true">♡</span></span></footer>
+    </div>
+  </body>
+</html>
