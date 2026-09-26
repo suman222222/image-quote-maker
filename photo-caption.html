@@ -113,16 +113,17 @@
   .header-right .credit-pill { cursor: pointer; font-family: inherit; border: 1px solid var(--stroke-2); background: #222; }
   .header-right .credit-pill:hover { background: #303030; }
   .app { max-width: 1380px; }
-  .bg-swatch.active { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.2); }
-  .bg-swatch.active::after { background: rgba(0,0,0,.22); }
-  .chip.active { background: rgba(255,255,255,.1); border-color: #aaa; color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.05); }
   .step-num { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.24); color: #eee; }
-  .mode-btn.active, .btn-primary { background: linear-gradient(135deg,#f0f0f0,#a5a5a5); color: #111; box-shadow: 0 4px 12px rgba(255,255,255,.12); }
+  .mode-btn.active, .btn-primary, .pro-cta { background: linear-gradient(135deg,#f0f0f0,#a5a5a5); color: #111; box-shadow: 0 4px 12px rgba(255,255,255,.12); }
   .style-preset.active { border-color: #bbb; background: rgba(255,255,255,.06); }
   .style-preset.active .sp-name { color: #fff; }
+  .bg-swatch.active { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.2); }
+  .bg-swatch.active::after { background: rgba(0,0,0,.22); }
+  .chip.active, .pos-chip.active { background: rgba(255,255,255,.1); border-color: #aaa; color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.05); }
   .slider { accent-color: #ddd; }
   .upload-zone.dragover { border-color: #ddd; background: rgba(255,255,255,.04); }
   .toast-icon.success, .toast-icon.info { background: rgba(255,255,255,.1); color: #eee; }
+  .pro-banner { background: linear-gradient(135deg,#161616,#0b0b0b); border-color: #303030; }
 
   .credit-pill {
     font-size: 11px; font-weight: 700; color: #fff;
@@ -1021,8 +1022,8 @@
     <div class="pro-banner">
       <div class="pro-lock">🔒</div>
       <div class="pro-text">
-        <div class="title">Sumxn Studio Pro</div>
-        <div class="desc">Custom fonts · batch export · watermark removal · scheduled posts</div>
+        <div class="title">My Studio</div>
+        <div class="desc">Photo captions · creative tools · English practice</div>
       </div>
     </div>
     <button class="pro-cta" id="proBtn">Coming Soon</button>

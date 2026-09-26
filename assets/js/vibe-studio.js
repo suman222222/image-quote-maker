@@ -78,7 +78,7 @@
       return;
     }
     const caption = `${selectedVibe.caption} ${moment}`;
-    const description = `A ${selectedVibe.words} moment: ${moment} ${selectedVibe.detail}`;
+    const description = `The mood is ${selectedVibe.words}. ${moment.replace(/[.!?]?$/, ".")} ${selectedVibe.detail}`;
     document.querySelector("#caption-output").value = caption;
     document.querySelector("#description-output").value = description;
     setStatus(`Caption and description created with your ${selectedVibe.label.toLowerCase()} vibe. Your words are ready to edit.`);
